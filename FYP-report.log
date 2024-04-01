@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.21)  1 APR 2024 14:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.21)  2 APR 2024 01:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -386,6 +386,8 @@ Package biblatex Info: ... file 'blx-dm.def' found.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/blx-dm.def
 File: blx-dm.def 2019/12/01 v3.14 biblatex localization (PK/MW)
 )
+Package biblatex Info: Trying to load biblatex style data model...
+Package biblatex Info: ... file 'alphabetic.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \c@afterword=\count321
@@ -493,10 +495,10 @@ File: biblatex.def 2019/12/01 v3.14 biblatex compatibility (PK/MW)
 \biburllcskip=\muskip21
 \c@smartand=\count397
 )
-Package biblatex Info: Trying to load bibliography style 'numeric'...
-Package biblatex Info: ... file 'numeric.bbx' found.
- (/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
-File: numeric.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'alphabetic'...
+Package biblatex Info: ... file 'alphabetic.bbx' found.
+ (/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/bbx/alphabetic.bbx
+File: alphabetic.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
@@ -504,16 +506,15 @@ File: standard.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
 \c@bbx:relatedcount=\count398
 \c@bbx:relatedtotal=\count399
 ))
-Package biblatex Info: Trying to load citation style 'numeric'...
-Package biblatex Info: ... file 'numeric.cbx' found.
- (/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
-File: numeric.cbx 2019/12/01 v3.14 biblatex citation style (PK/MW)
+Package biblatex Info: Trying to load citation style 'alphabetic'...
+Package biblatex Info: ... file 'alphabetic.cbx' found.
+ (/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/cbx/alphabetic.cbx
+File: alphabetic.cbx 2019/12/01 v3.14 biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
 Package biblatex Info: Redefining '\footcitetext'.
 Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\supercite'.
 Package biblatex Info: Redefining '\textcite'.
 Package biblatex Info: Redefining '\textcites'.
 Package biblatex Info: Redefining '\cites'.
@@ -532,22 +533,22 @@ Package: setspace 2011/12/19 v6.7a set line spacing
  (/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.aux)
 \openout1 = `FYP-report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -583,13 +584,13 @@ LaTeX Font Info:    ... okay on input line 29.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \celsius on input line 29.
-Package gensymb Info: Faking symbols for \degree and \celsius on input line 29.
+LaTeX Info: Redefining \celsius on input line 34.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 34.
 
 Package gensymb Warning: Not defining \perthousand.
 
-LaTeX Info: Redefining \ohm on input line 29.
-Package gensymb Info: Using \Omega for \ohm on input line 29.
+LaTeX Info: Redefining \ohm on input line 34.
+Package gensymb Info: Using \Omega for \ohm on input line 34.
 
 Package gensymb Warning: Not defining \micro.
 
@@ -613,7 +614,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 \AtBeginShipoutBox=\box56
-Package hyperref Info: Link coloring OFF on input line 29.
+Package hyperref Info: Link coloring OFF on input line 34.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
  (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -623,9 +624,10 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count408
 )
-LaTeX Info: Redefining \ref on input line 29.
-LaTeX Info: Redefining \pageref on input line 29.
-LaTeX Info: Redefining \nameref on input line 29.
+LaTeX Info: Redefining \ref on input line 34.
+LaTeX Info: Redefining \pageref on input line 34.
+LaTeX Info: Redefining \nameref on input line 34.
+ (/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.out) (/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.out)
 \@outlinefile=\write4
 \openout4 = `FYP-report.out'.
 
@@ -642,691 +644,46 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'FYP-report.bbl' found.
  (/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.bbl)
-Package biblatex Info: Reference section=0 on input line 29.
-Package biblatex Info: Reference segment=0 on input line 29.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 33.
+Package biblatex Info: Reference section=0 on input line 34.
+Package biblatex Info: Reference segment=0 on input line 34.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 38.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 33.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
+) (/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.toc [1
+
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
 \tf@toc=\write5
 \openout5 = `FYP-report.toc'.
 
-
-
-LaTeX Warning: Citation 'RevModPhys.77.513' on page 1 undefined on input line 67.
-
-
-LaTeX Warning: Citation 'Joshi_2021' on page 1 undefined on input line 69.
-
-
-LaTeX Warning: Citation 'D_Anjou_2019' on page 1 undefined on input line 69.
-
-
-LaTeX Warning: Citation 'Nielsen2010' on page 1 undefined on input line 70.
-
-
-LaTeX Warning: Reference `sec:future_work' on page 1 undefined on input line 74.
-
-[1
-
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: Citation 'blais2004' on page 2 undefined on input line 98.
-
-
-LaTeX Warning: Citation 'houck2008' on page 2 undefined on input line 98.
-
-
-LaTeX Warning: Citation 'girvin2014' on page 2 undefined on input line 100.
-
-
-LaTeX Warning: Citation 'ofek2016' on page 2 undefined on input line 100.
-
-
-LaTeX Warning: Citation 'petersson2012' on page 2 undefined on input line 102.
-
-
-LaTeX Warning: Citation 'mi2018' on page 2 undefined on input line 102.
-
-
-LaTeX Warning: Citation 'khaneja2005' on page 2 undefined on input line 104.
-
-
-LaTeX Warning: Citation 'cai2011' on page 2 undefined on input line 104.
-
-[2]
-
-LaTeX Warning: Citation 'nielsen2002quantum' on page 3 undefined on input line 110.
-
-
-LaTeX Warning: Citation 'devoret2013superconducting' on page 3 undefined on input line 114.
-
-
-LaTeX Warning: Citation 'blatt2012quantum' on page 3 undefined on input line 115.
-
-
-LaTeX Warning: Citation 'kitaev2003fault' on page 3 undefined on input line 116.
-
-
-LaTeX Warning: Citation 'loss1998quantum' on page 3 undefined on input line 117.
-
-
-LaTeX Warning: Citation 'weedbrook2012gaussian' on page 3 undefined on input line 118.
-
-[3]
-
-LaTeX Warning: Citation 'nielsen2002quantum' on page 4 undefined on input line 120.
-
-
-LaTeX Warning: Citation 'Mi2018' on page 4 undefined on input line 136.
-
-
-LaTeX Warning: Citation 'Landig2018' on page 4 undefined on input line 136.
-
-
-LaTeX Warning: Citation 'D_Anjou_2019' on page 4 undefined on input line 137.
-
-
-LaTeX Warning: Reference `fig:DQD' on page 4 undefined on input line 138.
-
-[4]
-
-LaTeX Warning: Reference `eq:DQD_Hamiltonian' on page 5 undefined on input line 153.
-
-<DQD.png, id=37, 475.7775pt x 539.01375pt>
+ [2] [3] [4] [5]
+<DQD.png, id=191, 475.7775pt x 539.01375pt>
 File: DQD.png Graphic file (type png)
 <use DQD.png>
-Package pdftex.def Info: DQD.png  used on input line 158.
+Package pdftex.def Info: DQD.png  used on input line 163.
 (pdftex.def)             Requested size: 250.24199pt x 283.50461pt.
-[5]
+ [6]
 
-LaTeX Warning: Reference `fig:DQD' on page 6 undefined on input line 166.
+LaTeX Warning: Reference `eq:DQD' on page 7 undefined on input line 172.
 
-
-LaTeX Warning: Reference `eq:DQD' on page 6 undefined on input line 167.
-
-
-LaTeX Warning: Reference `eq:DQD_resonator_Hamiltonian' on page 6 undefined on input line 177.
-
-[6pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
+[7pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.179 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/DQD.png>] [7] [8] [9] [10] [11]
-
-LaTeX Warning: Citation 'd2021introduction' on page 12 undefined on input line 303.
-
-
-LaTeX Warning: Citation 'd2021introduction' on page 12 undefined on input line 303.
-
-
-Overfull \hbox (7.12387pt too wide) in paragraph at lines 303--305
-\T1/cmr/m/n/12 These ques-tions are ad-dressed as con-trol-la-bil-ity and quan-tum op-ti-mal con-trol [[]].
- []
-
-<principles_quantum_control.png, id=81, 200.75pt x 181.478pt>
+l.184 
+       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/DQD.png>] [8] [9] [10] [11] [12]
+<principles_quantum_control.png, id=237, 200.75pt x 181.478pt>
 File: principles_quantum_control.png Graphic file (type png)
 <use principles_quantum_control.png>
-Package pdftex.def Info: principles_quantum_control.png  used on input line 308.
+Package pdftex.def Info: principles_quantum_control.png  used on input line 313.
 (pdftex.def)             Requested size: 250.24199pt x 226.23494pt.
-[12] [13pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
+ [13] [14pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.333 $$
+l.338 $$
          </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/principles_quantum_control.png>]
-
-LaTeX Warning: Citation 'KHANEJA2005296' on page 14 undefined on input line 340.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 346--353
-
- []
-
-
-LaTeX Warning: Reference `sec:figure_of_merit' on page 14 undefined on input line 360.
-
-[14]
-
-LaTeX Warning: Reference `sec:finite_variables_optimization' on page 15 undefined on input line 365.
-
-
-LaTeX Warning: Citation 'PhysRevLett.106.190501' on page 15 undefined on input line 378.
-
-
-LaTeX Warning: Citation 'PhysRevA.84.022326' on page 15 undefined on input line 378.
-
-
-Overfull \hbox (89.3144pt too wide) in paragraph at lines 378--381
-[]\T1/cmr/m/n/12 CRAB comes in when the pulse com-plex-ity is very low. [[]][[]]
- []
-
-[15]
-
-LaTeX Warning: Citation 'PhysRevA.92.062343' on page 16 undefined on input line 394.
-
-[16]
-Underfull \hbox (badness 10000) in paragraph at lines 429--433
-
- []
-
-[17]
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:469: Package inputenc Error: Unicode character ≤ (U+2264)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.469 ... to be feasible, we need $\epsilon(t) ≤
-                                                   \epsilon_{max}$ for all t...
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-[18] [19]
-
-LaTeX Warning: Citation 'lzl_github_repo' on page 20 undefined on input line 540.
-
-[20] [21]
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:587: LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.587 
-      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:594: Package inputenc Error: Unicode character ψ (U+03C8)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.594 ...to the evolution from an initial state ψ
-                                                  0 at t=0 to U(T)ψ0 at the...
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:594: Package inputenc Error: Unicode character ψ (U+03C8)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.594 ...rom an initial state ψ0 at t=0 to U(T)ψ
-                                                  0 at the t=evo\_time. The ...
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-<single_qubit_control1.png, id=176, 455.301pt x 338.9463pt>
-File: single_qubit_control1.png Graphic file (type png)
-<use single_qubit_control1.png>
-Package pdftex.def Info: single_qubit_control1.png  used on input line 605.
-(pdftex.def)             Requested size: 475.45825pt x 353.96466pt.
-<single_qubit_control2.png, id=177, 455.301pt x 338.9463pt>
-File: single_qubit_control2.png Graphic file (type png)
-<use single_qubit_control2.png>
-Package pdftex.def Info: single_qubit_control2.png  used on input line 611.
-(pdftex.def)             Requested size: 475.45825pt x 353.96466pt.
-[22] [23pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.615 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/single_qubit_control1.png>]
-
-LaTeX Warning: Citation 'reinhold2019' on page 24 undefined on input line 635.
-
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:644: Package amsmath Error: Erroneous nesting of equation structures;
-(amsmath)                trying to recover with `aligned'.
-
-See the amsmath package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.644 \end{align}
-                 
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[24pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.645 $$
-         </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/single_qubit_control2.png>]
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:675: Package amsmath Error: Erroneous nesting of equation structures;
-(amsmath)                trying to recover with `aligned'.
-
-See the amsmath package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.675 \end{align*}
-                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:683: Package amsmath Error: Erroneous nesting of equation structures;
-(amsmath)                trying to recover with `aligned'.
-
-See the amsmath package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.683 \end{align*}
-                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[25]
-<vac2coherent_control1.png, id=205, 455.301pt x 339.669pt>
-File: vac2coherent_control1.png Graphic file (type png)
-<use vac2coherent_control1.png>
-Package pdftex.def Info: vac2coherent_control1.png  used on input line 700.
-(pdftex.def)             Requested size: 475.45825pt x 354.71938pt.
-<vac2coherent_control2.png, id=206, 455.301pt x 338.9463pt>
-File: vac2coherent_control2.png Graphic file (type png)
-<use vac2coherent_control2.png>
-Package pdftex.def Info: vac2coherent_control2.png  used on input line 706.
-(pdftex.def)             Requested size: 475.45825pt x 353.96466pt.
- [26pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.710 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2coherent_control1.png>]
-<vac2coherent_simulate.png, id=213, 1178.001pt x 171.2799pt>
-File: vac2coherent_simulate.png Graphic file (type png)
-<use vac2coherent_simulate.png>
-Package pdftex.def Info: vac2coherent_simulate.png  used on input line 714.
-(pdftex.def)             Requested size: 475.45825pt x 69.13275pt.
- [27pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.725 \end{enumerate}
-                     pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.725 \end{enumerate}
-                      </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2coherent_control2.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2coherent_simulate.png>]
-<vac2coherent_N_convergence.png, id=223, 452.4102pt x 327.3831pt>
-File: vac2coherent_N_convergence.png Graphic file (type png)
-<use vac2coherent_N_convergence.png>
-Package pdftex.def Info: vac2coherent_N_convergence.png  used on input line 729.
-(pdftex.def)             Requested size: 475.45825pt x 344.06212pt.
-<check_convergence_control1.png, id=224, 408.3255pt x 328.8285pt>
-File: check_convergence_control1.png Graphic file (type png)
-<use check_convergence_control1.png>
-Package pdftex.def Info: check_convergence_control1.png  used on input line 736.
-(pdftex.def)             Requested size: 475.45825pt x 382.90143pt.
- [28pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.740 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2coherent_N_convergence.png>]
-<check_convergence_control2.png, id=232, 408.3255pt x 328.8285pt>
-File: check_convergence_control2.png Graphic file (type png)
-<use check_convergence_control2.png>
-Package pdftex.def Info: check_convergence_control2.png  used on input line 743.
-(pdftex.def)             Requested size: 475.45825pt x 382.90143pt.
- [29pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.747 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/check_convergence_control1.png>] [30pdfTeX warning (ext4): destination with the same identifier (name{figure.10}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.764     \item c
-                 avity frequency, wr = $2 \pi$ </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/check_convergence_control2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 782--787
-
- []
-
-<unselective_spin_flip_control1.png, id=247, 354.123pt x 137.313pt>
-File: unselective_spin_flip_control1.png Graphic file (type png)
-<use unselective_spin_flip_control1.png>
-Package pdftex.def Info: unselective_spin_flip_control1.png  used on input line 800.
-(pdftex.def)             Requested size: 475.45825pt x 184.37558pt.
-[31]
-<unselective_spin_flip_control2.png, id=254, 344.0052pt x 137.313pt>
-File: unselective_spin_flip_control2.png Graphic file (type png)
-<use unselective_spin_flip_control2.png>
-Package pdftex.def Info: unselective_spin_flip_control2.png  used on input line 806.
-(pdftex.def)             Requested size: 475.45825pt x 189.78546pt.
-<unselective_spin_flip_control3.png, id=255, 345.4506pt x 137.313pt>
-File: unselective_spin_flip_control3.png Graphic file (type png)
-<use unselective_spin_flip_control3.png>
-Package pdftex.def Info: unselective_spin_flip_control3.png  used on input line 812.
-(pdftex.def)             Requested size: 475.45825pt x 188.99556pt.
- [32pdfTeX warning (ext4): destination with the same identifier (name{figure.11}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.816 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.12}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.816 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/unselective_spin_flip_control1.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/unselective_spin_flip_control2.png>]
-<unselective_spin_flip_simulation.png, id=264, 897.5934pt x 171.2799pt>
-File: unselective_spin_flip_simulation.png Graphic file (type png)
-<use unselective_spin_flip_simulation.png>
-Package pdftex.def Info: unselective_spin_flip_simulation.png  used on input line 826.
-(pdftex.def)             Requested size: 475.45825pt x 90.72826pt.
-
-Overfull \hbox (64.65224pt too wide) in paragraph at lines 832--832
-[]\T1/cmr/bx/n/14.4 Diagnostic pulse: se-lec-tive spin flip, cav-ity cou-pled with sin-gle qubit(effective) 
- []
-
-
-LaTeX Warning: Citation 'Krastanov2015' on page 33 undefined on input line 835.
-
-[33pdfTeX warning (ext4): destination with the same identifier (name{figure.13}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.840 \end{equation}
-                    pdfTeX warning (ext4): destination with the same identifier (name{figure.14}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.840 \end{equation}
-                     </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/unselective_spin_flip_control3.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/unselective_spin_flip_simulation.png>]
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:861: LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.861 
-      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 862--867
-
- []
-
-<selective_spin_flip_GRAPE_control1.png, id=274, 1066.7052pt x 137.313pt>
-File: selective_spin_flip_GRAPE_control1.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_control1.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_control1.png  used on input line 880.
-(pdftex.def)             Requested size: 475.45825pt x 61.2036pt.
-File: selective_spin_flip_GRAPE_control1.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_control1.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_control1.png  used on input line 886.
-(pdftex.def)             Requested size: 475.45825pt x 61.2036pt.
-[34]
-File: selective_spin_flip_GRAPE_control1.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_control1.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_control1.png  used on input line 892.
-(pdftex.def)             Requested size: 475.45825pt x 61.2036pt.
-
-
-LaTeX Warning: Reference `fig:selective_spin_flip_control3_zoomin' on page 35 undefined on input line 898.
-
-<selective_spin_flip_GRAPE_simulation.png, id=280, 1178.001pt x 172.7253pt>
-File: selective_spin_flip_GRAPE_simulation.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_simulation.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_simulation.png  used on input line 916.
-(pdftex.def)             Requested size: 475.45825pt x 69.71616pt.
-[35pdfTeX warning (ext4): destination with the same identifier (name{figure.15}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.920 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.16}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.920 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.17}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.920 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/selective_spin_flip_GRAPE_control1.png>]
-
-/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.tex:932: LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.932 
-      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 938--941
-
- []
-
-<selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control1.png, id=289, 1070.3187pt x 137.313pt>
-File: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control1.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control1.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control1.png  used on input line 945.
-(pdftex.def)             Requested size: 475.45825pt x 60.99617pt.
-<selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control2.png, id=290, 1070.3187pt x 137.313pt>
-File: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control2.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control2.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control2.png  used on input line 951.
-(pdftex.def)             Requested size: 475.45825pt x 60.99617pt.
-<selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control3.png, id=291, 1070.3187pt x 137.313pt>
-File: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control3.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control3.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control3.png  used on input line 957.
-(pdftex.def)             Requested size: 475.45825pt x 60.99617pt.
-[36pdfTeX warning (ext4): destination with the same identifier (name{figure.18}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.961 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.19}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.961 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.20}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.961 
-       </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/selective_spin_flip_GRAPE_simulation.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control1.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control2.png>]
-<selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_simulation.png, id=302, 1178.001pt x 172.7253pt>
-File: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_simulation.png Graphic file (type png)
-<use selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_simulation.png>
-Package pdftex.def Info: selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_simulation.png  used on input line 973.
-(pdftex.def)             Requested size: 475.45825pt x 69.71616pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 984--998
-
- []
-
-[37pdfTeX warning (ext4): destination with the same identifier (name{figure.21}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.998 \begin{itemize}
-                     pdfTeX warning (ext4): destination with the same identifier (name{figure.22}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.998 \begin{itemize}
-                      </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_control3.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/selective_spin_flip_GRAPE_500,_100_000_LIN_constraints_simulation.png>]
-<vac2cat_effective_Hamiltonian_GRAPE_control1.png, id=314, 1066.7052pt x 137.313pt>
-File: vac2cat_effective_Hamiltonian_GRAPE_control1.png Graphic file (type png)
-<use vac2cat_effective_Hamiltonian_GRAPE_control1.png>
-Package pdftex.def Info: vac2cat_effective_Hamiltonian_GRAPE_control1.png  used on input line 1012.
-(pdftex.def)             Requested size: 475.45825pt x 61.2036pt.
-<vac2cat_effective_Hamiltonian_GRAPE_control2.png, id=315, 1066.7052pt x 137.313pt>
-File: vac2cat_effective_Hamiltonian_GRAPE_control2.png Graphic file (type png)
-<use vac2cat_effective_Hamiltonian_GRAPE_control2.png>
-Package pdftex.def Info: vac2cat_effective_Hamiltonian_GRAPE_control2.png  used on input line 1018.
-(pdftex.def)             Requested size: 475.45825pt x 61.2036pt.
-<vac2cat_effective_Hamiltonian_GRAPE_control3.png, id=316, 1066.7052pt x 137.313pt>
-File: vac2cat_effective_Hamiltonian_GRAPE_control3.png Graphic file (type png)
-<use vac2cat_effective_Hamiltonian_GRAPE_control3.png>
-Package pdftex.def Info: vac2cat_effective_Hamiltonian_GRAPE_control3.png  used on input line 1024.
-(pdftex.def)             Requested size: 475.45825pt x 61.2036pt.
- [38pdfTeX warning (ext4): destination with the same identifier (name{figure.23}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1028 
-       pdfTeX warning (ext4): destination with the same identifier (name{figure.24}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1028 
-        </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2cat_effective_Hamiltonian_GRAPE_control1.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2cat_effective_Hamiltonian_GRAPE_control2.png>]
-<vac2cat_effective_Hamiltonian_GRAPE_simulations.png, id=325, 1178.001pt x 172.7253pt>
-File: vac2cat_effective_Hamiltonian_GRAPE_simulations.png Graphic file (type png)
-<use vac2cat_effective_Hamiltonian_GRAPE_simulations.png>
-Package pdftex.def Info: vac2cat_effective_Hamiltonian_GRAPE_simulations.png  used on input line 1040.
-(pdftex.def)             Requested size: 475.45825pt x 69.71616pt.
- [39pdfTeX warning (ext4): destination with the same identifier (name{figure.25}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1056 \end{itemize}
-                    pdfTeX warning (ext4): destination with the same identifier (name{figure.26}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1056 \end{itemize}
-                     </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2cat_effective_Hamiltonian_GRAPE_control3.png> </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2cat_effective_Hamiltonian_GRAPE_simulations.png>]
-<vac2cat_krotov.png, id=334, 955.4094pt x 602.0091pt>
-File: vac2cat_krotov.png Graphic file (type png)
-<use vac2cat_krotov.png>
-Package pdftex.def Info: vac2cat_krotov.png  used on input line 1089.
-(pdftex.def)             Requested size: 475.45825pt x 299.58917pt.
- [40] [41pdfTeX warning (ext4): destination with the same identifier (name{figure.27}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1117             \item n
-                          umber of time slices (n\_ts): n\_ts that is too sm... </Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/vac2cat_krotov.png>]
-Overfull \hbox (56.40703pt too wide) in paragraph at lines 1137--1137
-[]\T1/cmr/bx/n/17.28 EXACT DI-AG-O-NAL-IZA-TION OF THE DOUBLE-QUANTUM-
- []
-
-
-LaTeX Warning: Reference `eq:DQD_Hamiltonian' on page 42 undefined on input line 1138.
-
-
-LaTeX Warning: Reference `eq:DQD_Hamiltonian' on page 42 undefined on input line 1139.
-
-[42]
-
-LaTeX Warning: Reference `eq:A4' on page 43 undefined on input line 1165.
-
-[43]
-
-LaTeX Warning: Reference `eq:A7' on page 44 undefined on input line 1191.
-
-
-LaTeX Warning: Reference `eq:DQD_Hamiltonian_in_eigenbasis' on page 44 undefined on input line 1191.
-
-
-LaTeX Warning: Reference `eq:A7' on page 44 undefined on input line 1194.
-
-
-LaTeX Warning: Reference `eq:A10' on page 44 undefined on input line 1217.
-
-
-LaTeX Warning: Reference `eq:DQD_resonator_interaction_new_basis' on page 44 undefined on input line 1218.
-
-[44]
-
-LaTeX Warning: Reference `eq:A8' on page 45 undefined on input line 1226.
-
-
-LaTeX Warning: Reference `eq:A11' on page 45 undefined on input line 1226.
-
-
-LaTeX Warning: Reference `eq:Larmour_frequencies' on page 45 undefined on input line 1226.
-
-
-LaTeX Warning: Reference `eq:couplings' on page 45 undefined on input line 1226.
-
-
-LaTeX Warning: Empty bibliography on input line 1232.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1233.
-[45]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1233.
- (/Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1233.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1233.
-
-
-Package rerunfilecheck Warning: File `FYP-report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `FYP-report.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  74CEF1D0748A5A313D3BD1BD647C5B3C;1918.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                FYP-report
-(biblatex)                and rerun LaTeX afterwards.
-
-Package logreq Info: Writing requests to 'FYP-report.run.xml'.
-\openout1 = `FYP-report.run.xml'.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1233.
- ) 
-Here is how much of TeX's memory you used:
- 16380 strings out of 480608
- 280457 string characters out of 5903630
- 1030078 words of memory out of 5000000
- 31851 multiletter control sequences out of 15000+600000
- 550263 words of font info for 75 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 42i,19n,65p,1766b,1203s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb>
-Output written on /Users/JohnnyLin/Library/CloudStorage/OneDrive-NationalUniversityofSingapore/Desktop/NUS/Y4S1DT/FYP-DT/FYP-report/FYP-report-draft1/FYP-report.pdf (45 pages, 1204543 bytes).
-PDF statistics:
- 481 PDF objects out of 1000 (max. 8388607)
- 360 compressed objects within 4 object streams
- 158 named destinations out of 1000 (max. 500000)
- 126 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+Underfull \hbox (badness 10000) 

@@ -40,7 +40,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>labelalpha</bcf:key>
-      <bcf:value>0</bcf:value>
+      <bcf:value>1</bcf:value>
     </bcf:option>
     <bcf:option type="multivalued">
       <bcf:key>labelnamespec</bcf:key>
@@ -163,7 +163,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortingtemplatename</bcf:key>
-      <bcf:value>nty</bcf:value>
+      <bcf:value>ynt</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortsets</bcf:key>
@@ -2131,126 +2131,4 @@
       </bcf:constraint>
     </bcf:constraints>
     <bcf:constraints>
-      <bcf:entrytype>report</bcf:entrytype>
-      <bcf:constraint type="mandatory">
-        <bcf:field>author</bcf:field>
-        <bcf:field>title</bcf:field>
-        <bcf:field>type</bcf:field>
-        <bcf:field>institution</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
-    <bcf:constraints>
-      <bcf:entrytype>thesis</bcf:entrytype>
-      <bcf:constraint type="mandatory">
-        <bcf:field>author</bcf:field>
-        <bcf:field>title</bcf:field>
-        <bcf:field>type</bcf:field>
-        <bcf:field>institution</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
-    <bcf:constraints>
-      <bcf:entrytype>unpublished</bcf:entrytype>
-      <bcf:constraint type="mandatory">
-        <bcf:field>author</bcf:field>
-        <bcf:field>title</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
-    <bcf:constraints>
-      <bcf:constraint type="data" datatype="isbn">
-        <bcf:field>isbn</bcf:field>
-      </bcf:constraint>
-      <bcf:constraint type="data" datatype="issn">
-        <bcf:field>issn</bcf:field>
-      </bcf:constraint>
-      <bcf:constraint type="data" datatype="ismn">
-        <bcf:field>ismn</bcf:field>
-      </bcf:constraint>
-      <bcf:constraint type="data" datatype="date">
-        <bcf:field>date</bcf:field>
-        <bcf:field>eventdate</bcf:field>
-        <bcf:field>origdate</bcf:field>
-        <bcf:field>urldate</bcf:field>
-      </bcf:constraint>
-      <bcf:constraint type="data" datatype="pattern" pattern="(?:sf|sm|sn|pf|pm|pn|pp)">
-        <bcf:field>gender</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
-  </bcf:datamodel>
-  <!-- CITATION DATA -->
-  <!-- SECTION 0 -->
-  <bcf:bibdata section="0">
-    <bcf:datasource type="file" datatype="bibtex">bibliography.bib</bcf:datasource>
-  </bcf:bibdata>
-  <bcf:section number="0">
-    <bcf:citekey order="1">RevModPhys.77.513</bcf:citekey>
-    <bcf:citekey order="2">Joshi_2021</bcf:citekey>
-    <bcf:citekey order="3">D_Anjou_2019</bcf:citekey>
-    <bcf:citekey order="4">Nielsen2010</bcf:citekey>
-    <bcf:citekey order="5">blais2004</bcf:citekey>
-    <bcf:citekey order="5">houck2008</bcf:citekey>
-    <bcf:citekey order="6">girvin2014</bcf:citekey>
-    <bcf:citekey order="6">ofek2016</bcf:citekey>
-    <bcf:citekey order="7">petersson2012</bcf:citekey>
-    <bcf:citekey order="7">mi2018</bcf:citekey>
-    <bcf:citekey order="8">khaneja2005</bcf:citekey>
-    <bcf:citekey order="8">cai2011</bcf:citekey>
-    <bcf:citekey order="9">nielsen2002quantum</bcf:citekey>
-    <bcf:citekey order="10">devoret2013superconducting</bcf:citekey>
-    <bcf:citekey order="11">blatt2012quantum</bcf:citekey>
-    <bcf:citekey order="12">kitaev2003fault</bcf:citekey>
-    <bcf:citekey order="13">loss1998quantum</bcf:citekey>
-    <bcf:citekey order="14">weedbrook2012gaussian</bcf:citekey>
-    <bcf:citekey order="15">nielsen2002quantum</bcf:citekey>
-    <bcf:citekey order="16">Mi2018</bcf:citekey>
-    <bcf:citekey order="17">Landig2018</bcf:citekey>
-    <bcf:citekey order="18">D_Anjou_2019</bcf:citekey>
-    <bcf:citekey order="19">d2021introduction</bcf:citekey>
-    <bcf:citekey order="20">d2021introduction</bcf:citekey>
-    <bcf:citekey order="21">KHANEJA2005296</bcf:citekey>
-    <bcf:citekey order="22">PhysRevLett.106.190501</bcf:citekey>
-    <bcf:citekey order="23">PhysRevA.84.022326</bcf:citekey>
-    <bcf:citekey order="24">PhysRevA.92.062343</bcf:citekey>
-    <bcf:citekey order="25">lzl_github_repo</bcf:citekey>
-    <bcf:citekey order="26">reinhold2019</bcf:citekey>
-    <bcf:citekey order="27">Krastanov2015</bcf:citekey>
-  </bcf:section>
-  <!-- SORTING TEMPLATES -->
-  <bcf:sortingtemplate name="nty">
-    <bcf:sort order="1">
-      <bcf:sortitem order="1">presort</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="2" final="1">
-      <bcf:sortitem order="1">sortkey</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="3">
-      <bcf:sortitem order="1">sortname</bcf:sortitem>
-      <bcf:sortitem order="2">author</bcf:sortitem>
-      <bcf:sortitem order="3">editor</bcf:sortitem>
-      <bcf:sortitem order="4">translator</bcf:sortitem>
-      <bcf:sortitem order="5">sorttitle</bcf:sortitem>
-      <bcf:sortitem order="6">title</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="4">
-      <bcf:sortitem order="1">sorttitle</bcf:sortitem>
-      <bcf:sortitem order="2">title</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="5">
-      <bcf:sortitem order="1">sortyear</bcf:sortitem>
-      <bcf:sortitem order="2">year</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="6">
-      <bcf:sortitem order="1">volume</bcf:sortitem>
-      <bcf:sortitem literal="1" order="2">0</bcf:sortitem>
-    </bcf:sort>
-  </bcf:sortingtemplate>
-  <!-- DATALISTS -->
-  <bcf:datalist section="0"
-                name="nty/global//global/global"
-                type="entry"
-                sortingtemplatename="nty"
-                sortingnamekeytemplatename="global"
-                labelprefix=""
-                uniquenametemplatename="global"
-                labelalphanametemplatename="global">
-  </bcf:datalist>
-</bcf:controlfile>
+      <bcf:entrytype>repor
