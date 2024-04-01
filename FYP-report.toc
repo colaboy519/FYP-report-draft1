@@ -4,40 +4,42 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2}Background, theory and motivation}{2}{section.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}Hamiltonians of physical system}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.1}bosonic-modes-encoded qubits}{2}{subsection.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}Quantum Optimal control}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.2}Physical systems and Hamiltonians}{4}{subsection.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}Figure of merit, cost function}{6}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Methodology: Quantum Optimal Control}{12}{section.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Pulse constraints}{6}{subsection.2.4}%
+\contentsline {subsection}{\numberline {3.1}GRAPE: Gradient Ascent Pulse Engineering}{14}{subsection.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.4.1}limit the intermediate photon number}{7}{subsubsection.2.4.1}%
+\contentsline {subsection}{\numberline {3.2}CRAB: Chopped RAndom Basis}{15}{subsection.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.4.2}Troubleshooting optimization convergence}{8}{subsubsection.2.4.2}%
+\contentsline {subsection}{\numberline {3.3}Figure of merit, cost function}{16}{subsection.3.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.5}Pulse optimization algorithms}{8}{subsection.2.5}%
+\contentsline {subsection}{\numberline {3.4}Finite variables optimization algorithms}{17}{subsection.3.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.5.1}GRAPE: Gradient Ascent Pulse Engineering}{9}{subsubsection.2.5.1}%
+\contentsline {subsection}{\numberline {3.5}Pulse constraints}{18}{subsection.3.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.5.2}CRAB: Chopped RAndom Basis}{10}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.1}Pulse constraint: limiting the intermediate photon number}{19}{subsubsection.3.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}State preparation pulse optimization}{11}{section.3}%
+\contentsline {subsection}{\numberline {3.6}Troubleshooting optimization convergence}{20}{subsection.3.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Starting with a simple diagnostic pulse, single qubit system}{11}{subsection.3.1}%
+\contentsline {section}{\numberline {4}State preparation pulse optimization}{21}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Diagnostic pulse: cavity vacuum to cat state}{12}{subsection.3.2}%
+\contentsline {subsection}{\numberline {4.1}Starting with a simple diagnostic pulse, single qubit system}{21}{subsection.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}Diagnostic pulse: unselective spin flip, cavity coupled with single qubit(effective)}{15}{subsection.3.3}%
+\contentsline {subsection}{\numberline {4.2}Diagnostic pulse: cavity vacuum to cavity coherent state}{24}{subsection.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.4}Diagnostic pulse: selective spin flip, cavity coupled with single qubit(effective)}{17}{subsection.3.4}%
+\contentsline {subsection}{\numberline {4.3}Diagnostic pulse: unselective spin flip, cavity coupled with single qubit(effective)}{30}{subsection.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.5}vacuum to cat state, cavity coupled with single qubit(effective)}{21}{subsection.3.5}%
+\contentsline {subsection}{\numberline {4.4}Diagnostic pulse: selective spin flip, cavity coupled with single qubit(effective)}{33}{subsection.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.6}Further discussions reagarding numerical pulse optimzation}{24}{subsection.3.6}%
+\contentsline {subsection}{\numberline {4.5}vacuum to cat state, cavity coupled with single qubit(effective)}{37}{subsection.4.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Physical realizability}{24}{section.4}%
+\contentsline {subsection}{\numberline {4.6}Further discussions reagarding numerical pulse optimzation}{41}{subsection.4.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Future work}{25}{section.5}%
+\contentsline {section}{\numberline {5}Future work}{42}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Conclusion}{25}{section.6}%
+\contentsline {section}{\numberline {6}Conclusion}{42}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A}EXACT DIAGONALIZATION OF THE DOUBLE-QUANTUM-DOT HAMILTONIAN}{42}{appendix.A}%
