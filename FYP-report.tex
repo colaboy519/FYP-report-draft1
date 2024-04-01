@@ -15,8 +15,13 @@
 \usepackage{xcolor} % for colored text
 \usepackage{graphicx} % For \includegraphics
 \usepackage{float}    % For the [H] placement specifier
-\usepackage{biblatex} %Imports biblatex package
-\addbibresource{bibliography.bib} %Import the bibliography file
+% \usepackage{biblatex} %Imports biblatex package
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{bib.bib} %Import the bibliography file
 
 % Document information
 \title{FYP Report}
@@ -65,7 +70,7 @@
 Quantum computing leverages quantum mechanics principles, using qubits that can exist in multiple states simultaneously, enabling parallel processing. 
 Various physical implementations such as superconducting qubits, trapped ions, and quantum dots have emerged as possible quantum computing platforms.
 Besides traditional discrete quantum variable quantum computing where qubits represent binary states, an emerging continuous variable quantum computing uses multiple physical qubits to encode logical qubits, offering a different approach to error correction. \cite{RevModPhys.77.513}
-One common plaform for continuous variable quantum computing is cavity coupled to an auxiliary qubit for control.
+One common platform for continuous variable quantum computing is cavity coupled to an auxiliary qubit for control.
 This is often termed "bosonic qubits in circuit QED".\cite{Joshi_2021} In this area of quantum computing, the common physical platform is cavity coupled to a transmon. In this report we consider a possible alternative, cavity coupled to a Double Quantum Dot (DQD). \cite{D_Anjou_2019}
 State preparation is crucial, as it initializes qubits for computation, with accuracy impacting the overall performance of quantum algorithms. \cite{Nielsen2010}
 In this report I focus on control pulse optimization for state preparation of a cavity cat state on a cavity-DQD physical system. 
@@ -99,15 +104,15 @@ Quantum computing has emerged as a paradigm with the potential to solve problems
 
 One of the key advantages of using a cavity for quantum computing is its potential for quantum error correction. By encoding a single logical qubit into multiple cavity Fock states, it is possible to protect against certain types of errors, thus enhancing the reliability of quantum computations \cite{girvin2014, ofek2016}.
 
-Despite the success of the cavity-coupled transmon system, there is ongoing research into alternative qubit implementations that may offer further advantages. One such alternative is the cavity-coupled Double Quantum Dot (DQD) system. This system combines the advantages of semiconductor quantum dots, such as scalability and compatibility with existing semiconductor technology, with the strong coupling and large Hilbert space provided by the cavity. The DQD system has the potential to achieve high-fidelity qubit operations while maintaining the error correction capabilities of cavity-based systems \cite{petersson2012, mi2018}.
+Despite the success of the cavity-coupled transmon system, there is ongoing research into alternative qubit implementations that may offer further advantages. One such alternative is the cavity-coupled Double Quantum Dot (DQD) system. This system combines the advantages of semiconductor quantum dots, such as scalability and compatibility with existing semiconductor technology, with the strong coupling and large Hilbert space provided by the cavity. The DQD system has the potential to achieve high-fidelity qubit operations while maintaining the error correction capabilities of cavity-based systems \cite{Mi2018}.
 
-The control and manipulation of quantum systems are central to the realization of quantum computing. Quantum optimal control theory provides a framework for designing control protocols that achieve desired quantum operations with high fidelity. In this context, the goal is to find optimal control fields that drive the evolution of the quantum system from an initial state to a target state or implement a specific unitary transformation. Techniques such as Gradient Ascent Pulse Engineering (GRAPE) and Chopped Random Basis (CRAB) optimization are commonly used to find these optimal control fields \cite{khaneja2005, cai2011}. These methods involve numerically optimizing a cost function, typically related to the fidelity between the achieved and desired quantum states, subject to constraints imposed by the physical system and control hardware.
+The control and manipulation of quantum systems are central to the realization of quantum computing. Quantum optimal control theory provides a framework for designing control protocols that achieve desired quantum operations with high fidelity. In this context, the goal is to find optimal control fields that drive the evolution of the quantum system from an initial state to a target state or implement a specific unitary transformation. Techniques such as Gradient Ascent Pulse Engineering (GRAPE) and Chopped Random Basis (CRAB) optimization are commonly used to find these optimal control fields \cite{KHANEJA2005296}. These methods involve numerically optimizing a cost function, typically related to the fidelity between the achieved and desired quantum states, subject to constraints imposed by the physical system and control hardware.
 
 In this report, we explore the application of quantum optimal control theory to the cavity-coupled DQD system for state preparation tasks. We compare the performance of different control optimization algorithms and investigate the effects of various approximations and constraints on the control fidelity. Through this study, we aim to demonstrate the potential of the cavity-coupled DQD system as a platform for quantum computing and contribute to the development of robust control techniques for quantum technologies.
 
 % gpt
 
-Quantum computing is a revolutionary technology that leverages the principles of quantum mechanics to perform calculations at speeds unattainable by classical computers. Unlike classical computers, which use bits as the basic unit of information (either 0 or 1), quantum computers use quantum bits, or qubits, which can exist in a superposition of both 0 and 1 simultaneously. This property, along with entanglement and interference, enables quantum computers to process a vast amount of information in parallel, making them potentially capable of solving certain complex problems much more efficiently than classical computers \cite{nielsen2002quantum}.
+Quantum computing is a revolutionary technology that leverages the principles of quantum mechanics to perform calculations at speeds unattainable by classical computers. Unlike classical computers, which use bits as the basic unit of information (either 0 or 1), quantum computers use quantum bits, or qubits, which can exist in a superposition of both 0 and 1 simultaneously. This property, along with entanglement and interference, enables quantum computers to process a vast amount of information in parallel, making them potentially capable of solving certain complex problems much more efficiently than classical computers \cite{Nielsen2010}.
 
 There are several physical implementations of quantum computers, each with its unique advantages and challenges. Some of the most prominent include:
 
@@ -367,9 +372,6 @@ Therefore, a piecewise constant approximation to the pulse amplitudes is made. T
         \end{enumerate}
 \end{itemize}
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{CRAB: Chopped RAndom Basis}
 
@@ -466,7 +468,7 @@ Procedure:
         \begin{equation*}
             f(\vec{\epsilon}(t)) = \mathcal{F}(\vec{\epsilon}(t)) + \sum_i \lambda_i g_i(\vec{\epsilon})
         \end{equation*}
-    \item pulse amplitude: the output power of our AWG is limited, and thus to be feasible, we need $\epsilon(t) ≤ \epsilon_{max}$ for all t. $\rightarrow$ hard cutoff / soft cutoff
+    \item pulse amplitude: the output power of our AWG is limited, and thus to be feasible, we need $\epsilon(t) \le \epsilon_{max}$ for all t. $\rightarrow$ hard cutoff / soft cutoff
         \begin{enumerate}
             \item Employ an optimization algorithm which naturally allows for such constraints $\rightarrow$ see K-BFGS-B in scipy.optimize
             \item Parametrise optimization problen 
@@ -582,9 +584,7 @@ With $H_1(t)$, $P_{+\hat{z} \rightarrow-\hat{z}}(t)$ only goes to 1 if
     \item $\omega_1 = \Omega$, i.e. $\omega = \omega_0$.
     \item $\omega_1 = \frac{\pi}{T}$ (with evolution time T fixed, smallest frequency needed)
 \end{enumerate}
-
 \\
-
 Now we run the pulse optimization and compare with analytical result. 
 \\
 Let t = evo\_time = T
@@ -637,12 +637,13 @@ from Reinhold PhD thesis (2.13) \cite{reinhold2019}:
     H_d = \omega_q a^\dagger a + \frac{\omega_z}{2} \sigma_z + \frac{\chi}{2} a^\dagger a \sigma_z
 \end{equation}
 It can be shown that it's equivalent to: %TODO: vet this
-$$
-\begin{align}
+\begin{equation}
+    \begin{aligned}
     H_d &= g\left( \hat{\sigma}_+ \hat{\sigma}_- + \hat{a}^{\dagger}\hat{a}\hat{\sigma}_z \right) \\
     &= g \left( \frac{1}{2}(1+\hat{\sigma}_x) + \hat{n}\hat{\sigma}_z\right)
-\end{align}
-$$  
+\end{aligned}
+\end{equation}
+
 where, $g$ is the cavity-qubit coupling strength which is set to be $50*2 \pi MHz$ here, as given by experiment
 % TODO: ask chiyuan about g value, cite paper for this valu 
 \\
@@ -668,20 +669,22 @@ H_c = \epsilon_c(t) (\hat{a}+\hat{a}^{\dagger}) + \epsilon_T(t) \hat{\sigma}_x
 $$
 
 Initial and target states: 
-$$
-\begin{align*}
+\begin{equation}
+    \begin{aligned}
     \ket{\psi_{\text{initial}}} &= \ket{\alpha} \\
     \ket{\psi_{\text{final}}} &= \ket{\alpha} + \ket{-\alpha}
-\end{align*}
-$$
+\end{aligned}
+\end{equation}
+
 
 For testing the code, consider
-$$
-\begin{align*}
-    \ket{\psi_{\text{initial}}} &= \ket{0} \\
-    \ket{\psi_{\text{final}}} &= \ket{\alpha}
-\end{align*}
-$$
+\begin{equation}
+    \begin{aligned}
+        \ket{\psi_{\text{initial}}} &= \ket{0} \\
+        \ket{\psi_{\text{final}}} &= \ket{\alpha}
+    \end{aligned}
+\end{equation}
+
 
 The optimization algorithm settings used in this example are: 
 \begin{itemize}
@@ -927,9 +930,7 @@ However, this numerical solution has the folowing issues.
 The optimzied pulses go beyong the amplitude constrains that required for the effective Hamiltonian to be valid. 
 When the pulse amplitdes constrained are supplied to the optimziation algorithms, the results are not very satisfactory. 
 % TODO: try the code with pulse amplitude constraints}
-
 \\
-
 The following run has two modifications: 
 \begin{itemize}
     \item initial guess pulse is changed from sindusoidal to linear to see whether this improves the fast oscillation issue
@@ -1228,6 +1229,5 @@ Moreover, note that the matrix element of the dimensionless position operator $\
 This means that spin transitions arising from the coupling of electric fields to the electric dipole occur at a rate proportional to $\left(g_s / g_c\right)^2$. 
 Finally, we remark that exact expressions for the transformed spin operators may also be obtained.
 
-
-\printbibliography{bibliography.bib}
+\printbibliography
 \end{document}
