@@ -1,13 +1,12 @@
 \documentclass[12pt]{report}
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx}
 \usepackage[export]{adjustbox}
 \usepackage{amsmath,mathtools}
-\usepackage[subpreambles=true]{standalone}
-\usepackage[document]{ragged2e}
+% \usepackage[subpreambles=true]{standalone}
+\usepackage{ragged2e}
 \usepackage[english]{babel}
 \usepackage{siunitx}
-\usepackage{cite}
+% \usepackage{cite}
 \usepackage{braket}
 \usepackage{geometry}
 \geometry{left = 2cm,right = 2cm,top = 4cm}
@@ -17,8 +16,6 @@
 \usepackage{amssymb} % For math symbols 
 \usepackage{gensymb} % For degree symbol
 \usepackage{diagbox} % For table
-\usepackage{slashbox} % For table
-% \usepackage[margin=1in,headheight=57pt,headsep=0.1in]{geometry}
 \usepackage{hyperref}
 \usepackage{xcolor} % for colored text
 \usepackage{graphicx} % For \includegraphics
@@ -29,6 +26,7 @@ backend=biber,
 style=alphabetic,
 sorting=ynt
 ]{biblatex}
+\usepackage{csquotes} % for biblatex
 \addbibresource{bib.bib} %Import the bibliography file
 \usepackage{rotating}
 \usepackage{tabularx}
@@ -37,7 +35,7 @@ sorting=ynt
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Code}
 \lstset{captionpos=b} % set the caption position to bottom
-\graphicspath{ {images/} }
+% \graphicspath{ {images/} }
 \usepackage{datetime}
 \usepackage{appendix}
 \usepackage[stable]{footmisc} %for footnote in title
@@ -46,22 +44,24 @@ sorting=ynt
 \title{
 \includegraphics[width=0.25\textwidth]{nus_logo.jpeg}
 \includegraphics[width=0.32\textwidth]{cqt_logo.png}\\
-{\LARGE \textbf{Laser Frequency Stabilisation For The Ion Trap Quantum Processor}}\\
+{\LARGE \textbf{
+    Bosonic state preparation through coupling with semicon-spin qubit using numerically optimized pulse sequences
+    }}\\
 \vspace{5mm}
-{\normalsize A report submitted in partial fulfillment for the courses}\\
-{\normalsize PC3288 - \textit{Advanced UROPS in Physics I}}\\
-{\normalsize PC3289 - \textit{Advanced UROPS in Physics II}}
+{Final Year Project Report}
 }
 
 \author{
-{\normalsize Lin Zhonglin \hspace{10mm} A0222183N}\\
-\vspace{1mm}
-{\normalsize Supervisor: Associate Professor Dzmitry Matsukevich}\\
-{\normalsize Assessor: Associate Professor Dzmitry Matsukevich}\\
-{\normalsize Assessor: Doctor Jaren Gan }}\\
-\date{{\normalsize Department of Physics}\\
-{\normalsize National University of Singapore}\\
-{\normalsize Apr 2023}}
+    {\normalsize Lin Zhonglin \hspace{10mm} A0222183N}\\
+    \vspace{1mm}
+    {\normalsize Supervisor: Associate Professor Ng Huikhoon}\\
+    {\normalsize Co-supervisor: Dr Koh Teck Seng}
+}
+\date{
+    {\normalsize Department of Physics}\\
+    {\normalsize National University of Singapore}\\
+    {\normalsize Apr 2024}
+}
 
 \begin{document}
 \justifying
@@ -294,7 +294,7 @@ In particular, the DQD-resonator interaction of Eq. (2) is written in the new ba
 
 Here $\left\{g_m, g_s, g_{+}, g_{-}\right\}$are the coupling strengths of the resonator to the DQD transitions of frequencies $\left\{E_m, E_s, E_{+}, E_{-}\right\}$ illustrated in Fig. 2. 
 In addition, $g_{m p}$ and $g_{s p}$ are couplings arising from the finite dc electric polarizabilities of the molecular electric dipole and of the spin, respectively. 
-Exact expressions for the $g_i$ are given in cite{D_Anjou_2019} Appendix A.
+Exact expressions for the $g_i$ are given in \cite{D_Anjou_2019} Appendix A.
 \\
 The above chapter has been mostly lifted from \cite{D_Anjou_2019} for a detailed explaination of the original full Hamiltonian
 of the full Hamiltonian (as referenced later in chapter \ref{sec:further_discussions}).
@@ -377,7 +377,7 @@ We can use optimal control algorithms to determine a set of $u_j$ that will driv
 The latter of these is most important in quantum computation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{GRAPE: Gradient Ascent Pulse Engineering}
+\section{GRAPE: Gradient Ascent Pulse Engineering}
 The GRadient Ascent Pulse Engineering was first proposed in \cite{KHANEJA2005296}. 
 Overview of GRAPE algorithm as implemented in QuTip is as follows. 
 Solutions to Schrödinger's equation for a time-dependent Hamiltonian are not generally possible to obtain analytically. 
@@ -404,7 +404,7 @@ These methods are discussed in more detail in chapter \ref{sec:finite_variables_
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{CRAB: Chopped RAndom Basis}
+\section{CRAB: Chopped RAndom Basis}
 
 
 \begin{enumerate}
@@ -436,7 +436,7 @@ This approach significantly reduces the number of optimization parameters compar
 As a result, CRAB can efficiently optimize smooth pulses while incorporating realistic experimental constraints.
 However, note that CRAB by itself does not guarantee smooth pulses. If a functional basis with basis elements containing discontinuities is chosen, the CRAB solution will inherit those discontinuities.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Figure of Merit}\label{sec:figure_of_merit}
+\section{Figure of Merit}\label{sec:figure_of_merit}
 For state preparation case, we have the following evolved state fidelity as the figure of merit:
 \begin{align*}
     f(\vec{\epsilon}(t)) &= \mathcal{F}(\vec{\epsilon}(t)) \quad \text{state fidelity}\\
@@ -453,7 +453,7 @@ For state preparation case, we have the following evolved state fidelity as the 
 However, for our cavity-DQD composite system the composist system states need to be traced over the qubit state to obtain the cavity state fidelity. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Finite variables optimization algorithms}\label{sec:finite_variables_optimization}
+\section{Finite variables optimization algorithms}\label{sec:finite_variables_optimization}
 Here we discuss 
 \begin{equation}
     H(\vec{\epsilon}(t)) = H_0 + \sum_{k=1}^m \epsilon_k(t) H_k
@@ -483,7 +483,7 @@ On the other hand, if the step size is too large, the algorithm may overshoot th
 The gradient is then recalculated at the new point, and the process is repeated iteratively until a convergence criterion is met, indicating that the optimal control field has been found.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Pulse constraints} \label{sec:pulse_constraints}
+\section{Pulse constraints} \label{sec:pulse_constraints}
 When designing optimal control pulses for quantum systems, it is essential to consider the constraints imposed by the experimental setup, particularly those related to the arbitrary waveform generator (AWG). 
 The AWG's amplitude and bandwidth limitations can significantly impact the feasibility and performance of the control pulses. 
 To incorporate these constraints into the optimization process, one approach is to add a set of constraint terms to the cost function, as shown in the following equation:
@@ -525,7 +525,7 @@ This penalty term encourages the optimization algorithm to find control pulses t
 By incorporating these constraints and penalty terms into the optimization problem, we can design control pulses that are not only effective in achieving the desired quantum operation but also feasible to implement experimentally, taking into account the limitations of the AWG and the finite memory of classical computers used for simulations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Troubleshooting Optimization Algorithm}
+\section{Troubleshooting Optimization Algorithm}
 Here I provide a check list for Troubleshooting the optimization algorithm that I have accumulated during my project. 
 However, this list is nonexhaustive and Reinhold provides his version in chapter 4.6, \cite{reinhold2019}.
 \begin{enumerate}
@@ -544,7 +544,7 @@ However, this list is nonexhaustive and Reinhold provides his version in chapter
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{My Codes}
+\section{My Codes}
 % include: 
 % - show what I did to generate the results in next chapter, use what packages and write what codes
 This project is entirely conducted in python. The main quantum control libray in python is QuTiP.
@@ -603,7 +603,7 @@ where, initial and target states are given by:
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Starting with a simple diagnostic pulse, single qubit system}
+\section{Starting with a simple diagnostic pulse, single qubit system}
 To verify that I have a working code that can optimize a pulse, 
 I will start with a simple qubit flip operation of a single-qubit system.
 The purpose of this chapter is to show that the algorigm is indeed running optimization
@@ -651,7 +651,7 @@ Let t = evo\_time = T
 \\
 Defining the time evolution parameters:
 - To solve the evolution the control amplitudes are considered constant within piecewise timeslots, hence the evolution during the timeslot can be calculated using U(t\_k) = expm(-iH(t\_k)dt). 
-- Combining these for all the timeslots gives the approximation to the evolution from an initial state ψ0 at t=0 to U(T)ψ0 at the t=evo\_time. The number of timeslots and evo\_time have to be chosen such that the timeslot durations (dt) are small compared with the dynamics of the system.
+- Combining these for all the timeslots gives the approximation to the evolution from an initial state $\psi_0$ at t=0 to $U(T)\psi_0$ at the t=evo\_time. The number of timeslots and evo\_time have to be chosen such that the timeslot durations (dt) are small compared with the dynamics of the system.
 - set drift frequency $\omega_0$ to some number, at resonance $\omega = \omega_0$, for state to state preparation to happen at the end of pulse, require $\omega_1 = \frac{\pi}{T}$.
 \\
 Next, we set the initial guess pulses where the pulse optimization algorithm starts. 
@@ -689,7 +689,7 @@ evolution simulation code snippet.
 % TODO: discuss why is there a qutip simulation and a self-implemented simulation
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Diagnostic pulse: cavity vacuum to cavity coherent state}
+\section{Diagnostic pulse: cavity vacuum to cavity coherent state}
 Having tested the code on a single qubit system, we now move on to a more complex system that I am eventually interested in. 
 In this code, we consider a cavity coupled to a single qubit.
 %TODO:
@@ -814,7 +814,7 @@ whether the optimziation result has converged with respect to $N$, consider:
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Diagnostic pulse: unselective spin flip, cavity coupled with single qubit(effective)}
+\section{Diagnostic pulse: unselective spin flip, cavity coupled with single qubit(effective)}
 Going from a cavity cavuum state to a cavity coherent state analytically requires only a displacement operation
 which requires only a control pulse to the cavity. Hence, in the previous disagnostic scenario the full Hamiltonia
 with all three (real) control channels were not used.
@@ -897,7 +897,7 @@ Simulation gives:
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Diagnostic pulse: selective spin flip, cavity coupled with single qubit(effective)}
+\section{Diagnostic pulse: selective spin flip, cavity coupled with single qubit(effective)}
 
 For this scenario, the drift and contorl Hamiltonian terms are same as in the previous chapter. We are interested in this state 
 preparation because as achieved by Krastanov et al.(2015) \cite{Krastanov2015} which gave a contruction for how to achieve arbitrary 
@@ -1046,7 +1046,7 @@ However, none gave optimization results where fidelity, pulse amplitude, pulse s
 are all accounted for satisfactorily. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{vacuum to cat state, cavity coupled with single qubit(effective)}\label{sec:vac2cat}
+\section{vacuum to cat state, cavity coupled with single qubit(effective)}\label{sec:vac2cat}
 In this chapter, we finally get to do a state preparation optimization of cavity vacuum state to cavity cat state.
 The drift and control Hamiltonian terms are same as in the previous chapter.
 
@@ -1189,7 +1189,7 @@ Simulation gives:
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Further discussions}\label{sec:further_discussions}
+\section{Further discussions}\label{sec:further_discussions}
 There are a few points to be made regrading choosing the time parameters for optimization, evolution time (evo\_time) and number of time slices (n\_ts).
 Evolution time (evo\_time), or equivalently the pulse length, can be estimated %TODO: ask chiyuan how is this calculated
 Number of time slices (n\_ts) that is too small will lead to large error. 
@@ -1203,7 +1203,7 @@ Instead, it has a caching system that tries to minimize redundant calculations a
 As such, to implement partial trace fidelity for optimization using QuTip, one effectively needs to rewrite the bulk of the optimization code up to calling scipy optimization function. 
 Attempt was made in this direction but was given up half way due to project time constraint. 
 Besides, it was latered discovered that the Krotov package, a package based on top of QuTip, implements the optimziation process different from QuTip in such a was that allows for customization of fidelity. 
-See How-to chapter, "How to define a new optimization functional" in Krotov documentation for details. \cite{GoerzSPP2019}
+See How-to chapter, "How to define a new optimization functional" in Krotov documentation for details.
 However, this was not attempted due to time constraint.
 \\
 Secondly, the project did not yet get to consider all physical constraints on the control pulses as discussed in chapter \ref{sec:pulse_constraints}.
@@ -1253,7 +1253,7 @@ Future work should focus on improving computational efficiency, incorporating op
     breaklines=true, 
     breakatwhitespace=true, 
     caption = selective spin flip optimization code, 
-    label=code:elective_spin_flip]{elective_spin_flip.py}
+    label=code:selective_spin_flip]{selective_spin_flip.py}
 
 \printbibliography
 \end{document}
