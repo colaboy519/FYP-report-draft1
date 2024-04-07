@@ -1,12 +1,20 @@
-\documentclass[12pt]{article}
-% Packages
+\documentclass[12pt]{report}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{amsmath,mathtools}
+\usepackage[subpreambles=true]{standalone}
+\usepackage[document]{ragged2e}
+\usepackage[english]{babel}
+\usepackage{siunitx}
+\usepackage{cite}
+\usepackage{braket}
+\usepackage{geometry}
+\geometry{left = 2cm,right = 2cm,top = 4cm}
+
 \usepackage{lipsum} % For dummy text
 \usepackage{physics} % For physics notation
-\usepackage{amsmath} % For math
 \usepackage{amssymb} % For math symbols 
-\usepackage[margin=2cm]{geometry} % For smaller margins
 \usepackage{gensymb} % For degree symbol
 \usepackage{diagbox} % For table
 \usepackage{slashbox} % For table
@@ -22,124 +30,205 @@ style=alphabetic,
 sorting=ynt
 ]{biblatex}
 \addbibresource{bib.bib} %Import the bibliography file
+\usepackage{rotating}
+\usepackage{tabularx}
+\usepackage{array}
+% for code listing
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Code}
+\lstset{captionpos=b} % set the caption position to bottom
+\graphicspath{ {images/} }
+\usepackage{datetime}
+\usepackage{appendix}
+\usepackage[stable]{footmisc} %for footnote in title
+\usepackage{caption}
 
-% Document information
-\title{FYP Report}
-\author{Lin Zhonglin}
-\date{\today}
-\usepackage{setspace}
-% Using \doublespacing in the preamble 
-% changes the text to double-line spacing
-\doublespacing
+\title{
+\includegraphics[width=0.25\textwidth]{nus_logo.jpeg}
+\includegraphics[width=0.32\textwidth]{cqt_logo.png}\\
+{\LARGE \textbf{Laser Frequency Stabilisation For The Ion Trap Quantum Processor}}\\
+\vspace{5mm}
+{\normalsize A report submitted in partial fulfillment for the courses}\\
+{\normalsize PC3288 - \textit{Advanced UROPS in Physics I}}\\
+{\normalsize PC3289 - \textit{Advanced UROPS in Physics II}}
+}
+
+\author{
+{\normalsize Lin Zhonglin \hspace{10mm} A0222183N}\\
+\vspace{1mm}
+{\normalsize Supervisor: Associate Professor Dzmitry Matsukevich}\\
+{\normalsize Assessor: Associate Professor Dzmitry Matsukevich}\\
+{\normalsize Assessor: Doctor Jaren Gan }}\\
+\date{{\normalsize Department of Physics}\\
+{\normalsize National University of Singapore}\\
+{\normalsize Apr 2023}}
+
 \begin{document}
-\noindent
+\justifying
+\linespread{1.2}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
 
 \maketitle
-\tableofcontents
-
-\section{Overview}
-%%%%%% 草稿 %%%%%%%%
-% \begin{enumerate}
-%     \item Background: 
-%     \item Key part of my work: (depends on how far I go)
-%         \begin{enumerate}
-%             \item The optimised pulse for a particular state preparation
-%             \item how it differs from other pulse (Chiyuan's alternate pulse way)
-%             \item Go from model Hamiltonian to physical Hamiltonain, 
-%                     discuss the approximations' effect, 
-%                     compare fideilty
-%         \end{enumerate}
-% \end{enumerate}
-
-% TODO: 
-% \begin{enumerate}
-%     \item Go through the Hamiltonian derivation 
-%             $\rightarrow$ for comparison of fidelity later 
-%     \item does Qutip considers the cavity Hilbert space truncation discussed below? 
-% \end{enumerate}
 
 
-% Issues to be dealt with: 
-% \begin{enumerate}
-%     \item local minima / maxima in optimization algorithm
-%     \item Reinhold: 
-%         Optimizing a full unitary operation is sensible for qubits, or systems of a few qubits, but in the cavity manipulations to be performed in the following sections, this is not usually a sensible operation, since doing operations involving states at the border of the truncation (i.e. the maximum photon number state considered in the simulation), would typically require a larger truncation to simulate accurately (driving $\ket{n_{ph}}$) will almost always in part bring us partially to $\ket{n_{ph} + 1}$.
-% \end{enumerate}
-%%%%%% 草稿 %%%%%%%%
-% quantum computing -> continuous quantum computing -> transmon-cavity -> DQD-cavity -> state preparation -> pulse optimization -> 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{Abstract}
 Quantum computing leverages quantum mechanics principles, using qubits that can exist in multiple states simultaneously, enabling parallel processing. 
 Various physical implementations such as superconducting qubits, trapped ions, and quantum dots have emerged as possible quantum computing platforms.
-Besides traditional discrete quantum variable quantum computing where qubits represent binary states, an emerging continuous variable quantum computing uses multiple physical qubits to encode logical qubits, offering a different approach to error correction. \cite{RevModPhys.77.513}
+Besides traditional discrete quantum variable quantum computing where qubits represent binary states, an emerging continuous variable quantum computing uses usually infinite-dimensional quantum systems (like cavity states) to encode logical qubits, offering a different approach to error correction. \cite{RevModPhys.77.513}
 One common platform for continuous variable quantum computing is cavity coupled to an auxiliary qubit for control.
 This is often termed "bosonic qubits in circuit QED".\cite{Joshi_2021} In this area of quantum computing, the common physical platform is cavity coupled to a transmon. In this report we consider a possible alternative, cavity coupled to a Double Quantum Dot (DQD). \cite{D_Anjou_2019}
 State preparation is crucial, as it initializes qubits for computation, with accuracy impacting the overall performance of quantum algorithms. \cite{Nielsen2010}
 In this report I focus on control pulse optimization for state preparation of a cavity cat state on a cavity-DQD physical system. 
 Pulse optimization was successfully run for effective Hamiltonian (in restricted regime) of the system to arbitrarily high fidelity. (higher fidelity, longer computation time)
 However, the fidelity of the optimized pulses when run using the full physical Hamiltonian couldn't be attained in reasonable computation time. 
-Details can be seen in section \ref{sec:future_work}.
+Details can be seen in chapter \ref{sec:further_discussions}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{Acknowledgements}
+I would like to thank Associate Professor Ng Huikhoon and Dr Koh Tech Seng for this opportunity to gain invaluable experience in a quantum computation research group and also for their patience with me every Monday for the past eight months.
+I would also like to thank seniors Siyan and Chiyuan who have given me incredible support and guidance as I struggled through the project that is in a field very new to me. 
+I would also like to thank all the other seniors in Huikhoon's research group, especially Lukas who gave me many programming supports.
+This project would not have been possible without the superb people mentioned.
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Background, theory and motivation}
+\tableofcontents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}
 %%%%%% 草稿 %%%%%%%%
-% content: 
-% introduce the idea of bosonic-modes-encoded qubits, give a simple example;
-%  motivate Bosonic-modes-encoded qubits 
-%     -> that one physical device now can encode multiple qubits
-%     -> this also makes error correction more efficient -> easier to control multiple qubits
+% include: 
+% - quantum computing background 
+% -> continuous quantum computing 
+% -> transmon-cavity 
+% -> DQD-cavity 
+% -> state preparation 
+% -> pulse optimization 
+% - Key part of my work
 
-% introduce cavity-transmon system 
-% motivate for cavity-DQD system
+% 3-4 pages
+% Introduction to quantum computing,
+%   ->（1000 words)
+%       - basics of quantum computing, its advantages over classical computing
+%       - physical implementations of qubits, superconducting qubits, trapped ions, quantum dots
+%       - motivate for continuous variable quantum computing, typical physical implementation of cavity-transmon implementation
+%       - talk about the shortcomings of traditional cavity-transmon system, introduce the alternative cavity-DQD system, its advantages and potential
+%       - state preparation in quantum computing, its importance and challenges -> need state preparation for passing into quantum gates, etc
+%       - introduce pulse optimization as a method for state preparation, its importance and challenges
+%   -> discuss my work: (300 words)
+%       - methodology and overall plan
+%       - obtained results
+%       - tasks not completed and challenged causing these failure
+%       - possible future work
 
-% theory of cavity-DQD: 
-% original Hamiltonians -> rotation, approximaition, dispersive regime, etc... -> the Hamiltonian I used for pulse optimization
-
-
+% (reference each paragraph to the relaevant sections in the report)
 %%%%%% 草稿 %%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{bosonic-modes-encoded qubits}
-Quantum computing has emerged as a paradigm with the potential to solve problems that are intractable for classical computers. Among the various physical implementations of qubits, the cavity-coupled transmon system has become a leading platform due to its strong nonlinearity and large Hilbert space. This system leverages the coupling between the transmon qubit and the cavity to achieve robust qubit control and readout \cite{blais2004, houck2008}.
+Quantum computing has emerged as a paradigm with the potential to solve problems that are intractable for classical computers. 
+By leveraging the principles of quantum mechanics, such as superposition and entanglement, quantum computers can perform certain computations exponentially faster than their classical counterparts \cite{Nielsen2010}. 
+This has led to significant interest in developing practical quantum computing systems and algorithms for various applications, ranging from cryptography and optimization to quantum simulation and machine learning \cite{Preskill2018}.
+\\
+At the heart of quantum computing lies the qubit, the fundamental unit of quantum information. 
+Unlike classical bits, which can only be in one of two states (0 or 1), qubits can exist in a superposition of multiple states simultaneously. 
+This property, along with the ability to create entanglement between qubits, enables quantum computers to explore vast computational spaces in parallel \cite{Nielsen2010}. 
+However, realizing robust and scalable qubits is a significant challenge due to their susceptibility to noise and decoherence.
+\\
+Various physical implementations of qubits have been proposed and experimentally demonstrated, each with its own advantages and limitations. 
+Superconducting qubits, which utilize the collective behavior of cooper pairs in superconducting circuits, have emerged as a leading platform due to their strong nonlinearity, fast gate operations, and compatibility with existing microwave technology \cite{Kjaergaard2020}. 
+Trapped ion qubits, on the other hand, leverage the electronic states of ions confined in electromagnetic traps, offering long coherence times and high-fidelity gate operations \cite{Bruzewicz2019}. 
+Quantum dots, which are nanoscale structures that confine electrons or holes, have also shown promise as a scalable and easily controllable qubit platform \cite{Chatterjee2021}.
+\\
+In addition to the traditional approach of encoding qubits in discrete two-level systems, there has been growing interest in continuous variable quantum computing (CVQC). 
+CVQC utilizes the infinite-dimensional Hilbert space of bosonic modes, such as those of electromagnetic fields or mechanical oscillators, to encode and process quantum information \cite{Braunstein2005}. 
+One of the most prominent physical implementations of CVQC is the cavity-transmon system, where a superconducting transmon qubit is coupled to a microwave cavity. This hybrid approach combines the long coherence times of cavities with the strong nonlinearity and fast control of transmon qubits, enabling a range of quantum operations and error correction schemes \cite{Ofek2016}.
+\\
+However, the cavity-transmon system also has its limitations, such as its relatively short coherence times of transmon qubits compared to other platforms. 
+An alternative approach is to couple the cavity to a double quantum dot (DQD) instead of a transmon. 
+The cavity-DQD system has the potential to combine the advantages of semiconductor quantum dots, such as long coherence times and compatibility with existing semiconductor technology, with the benefits of CVQC \cite{Mi2018}. 
+This hybrid platform opens up new possibilities for quantum information processing and provides a promising avenue for scalable quantum computing \cite{Burkard2020}. (chapter \ref{sec:Physical systems and Hamiltonians})
+\\
+One of the key challenges in quantum computing is state preparation, which involves initializing the qubits in a desired quantum state before performing any computation. 
+The accuracy and efficiency of state preparation directly impact the overall performance of quantum algorithms and the reliability of quantum error correction schemes \cite{Shen2017}. 
+In CVQC, state preparation often involves creating non-classical states, such as Schrödinger cat states or squeezed states, which are essential for various quantum protocols \cite{Joshi_2021}. 
+However, preparing these states with high fidelity is a non-trivial task due to the presence of noise and the limitations of control techniques.
+\\
+Pulse optimization has emerged as a powerful method for state preparation in quantum systems. 
+By carefully designing the time-dependent control pulses applied to the qubits or cavities, one can steer the system towards the desired target state while minimizing the effects of noise and decoherence \cite{Khaneja2005}. 
+Quantum optimal control theory provides a framework for finding the optimal control pulses that maximize the fidelity of state preparation or gate operations \cite{Glaser2015}. 
+However, pulse optimization also faces challenges, such as the high dimensionality of the optimization problem, the presence of local minima in the control landscape, and the need to incorporate experimental constraints and imperfections \cite{Koch2016}. (chapter \ref{sec:Methodology: Quantum Optimal Control})
+\\
+In this project, we focus on exploring quantum optimal control techniques for state preparation in the cavity-DQD system. 
+Our methodology involves first deriving the effective Hamiltonian that describes the dynamics of the coupled cavity-DQD system in the dispersive regime. 
+We then formulate the state preparation problem as an optimization task, where the goal is to find the control pulses that maximize the fidelity between the evolved state and the target state. 
+We employ various optimization algorithms, such as GRAPE (GRadient Ascent Pulse Engineering) and CRAB (Chopped RAndom Basis), to numerically search for the optimal pulses \cite{KHANEJA2005296, PhysRevLett.106.190501}. (chapter \ref{sec:Methodology: Quantum Optimal Control})
+\\
+Here is a summary of optimization results: 
+\begin{sidewaystable}
+    \begin{tabularx}{\textheight}{|p{4cm}|X|X|X|X|X|X|X|p{3.5cm}|}
+    \hline
+    name                               & \begin{tabular}[c]{@{}l@{}}physical\\ system\end{tabular}             & \begin{tabular}[c]{@{}l@{}}initial\\ state\end{tabular} & \begin{tabular}[c]{@{}l@{}}target\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}ops\\ algo\end{tabular} & N     & \begin{tabular}[c]{@{}l@{}}\# of \\ time \\ steps\end{tabular} & \begin{tabular}[c]{@{}l@{}}pulse\\ length\end{tabular} & \begin{tabular}[c]{@{}l@{}}final\\ fidelity\\ (simulation)\end{tabular} \\ \hline
+    single\_qubit                      & \begin{tabular}[c]{@{}l@{}}single\\ qubit\end{tabular}                & \begin{tabular}[c]{@{}l@{}}ground\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}excited\\ state\end{tabular} & GRAPE                                              & NIL & 1000                                                           & 18                                                     & 0.9999367235643194                                                      \\ \hline
+    vac2coherent                       & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i1}$                                             & $\psi_{f1}$                                             & GRAPE                                              & 5     & 100                                                            & 1                                                      & 0.99998235969216                                                        \\ \hline
+    unselective\_spin\_flip            & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i2}$                                                        & $\psi_{f2}$                                                       & GRAPE                                              & 16    & 500                                                            & 1                                                      & 0.9995869703894827                                                      \\ \hline
+    selective\_spin\_flip              & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i3}$                                                        & $\psi_{f3}$                                                       & GRAPE                                              & 16    & 100000                                                         & 500                                                    & 0.9994876128337873                                                      \\ \hline
+    \begin{tabular}[c]{@{}l@{}}selective\_spin\_flip\\ \_constraints\end{tabular} & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i3}$             & $\psi_{f3}$                                                        & GRAPE                                              & 16    & 100000                                                         & 500                                                    & 0.9992259750482354                                                      \\ \hline
+    vac2cat                            & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i4}$                                                        & $\psi_{f4}$                                                        & GRAPE                                              & 16    & 100000                                                         & 5000                                                   &                                                                         \\ \hline
+    vac2cat                            & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i4}$                                                        & $\psi_{f4}$                                                        & KROTOV                                              & 16    & 100000                                                         & 5000                                                   & 0.9995017174335629                                                                       \\ \hline
+    \end{tabularx}
+\end{sidewaystable}
 
-One of the key advantages of using a cavity for quantum computing is its potential for quantum error correction. By encoding a single logical qubit into multiple cavity Fock states, it is possible to protect against certain types of errors, thus enhancing the reliability of quantum computations \cite{girvin2014, ofek2016}.
+where, initial and target states are given by: 
+\begin{align*}
+    % vac2coherent
+    \text{vac2coherent} \\
+    \psi_{i1} &= \ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+    \psi_{f1} &= \ket{\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+    % unselective
+    \text{unselective} \\
+    \psi_{i2} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}})\\
+    \psi_{f2} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{1}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{1}_{\text{qubit}})\\
+    % selective
+    \text{selective} \\
+    \psi_{i3} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}})\\
+    \psi_{f3} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{1}_{\text{qubit}})\\
+    % vac2cat
+    \text{vac2cat} \\
+    \psi_{i1} &= \ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+    \psi_{f1} &= \ket{\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{-\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+\end{align*}
 
-Despite the success of the cavity-coupled transmon system, there is ongoing research into alternative qubit implementations that may offer further advantages. One such alternative is the cavity-coupled Double Quantum Dot (DQD) system. This system combines the advantages of semiconductor quantum dots, such as scalability and compatibility with existing semiconductor technology, with the strong coupling and large Hilbert space provided by the cavity. The DQD system has the potential to achieve high-fidelity qubit operations while maintaining the error correction capabilities of cavity-based systems \cite{Mi2018}.
+The project aimed to optimize control pulses for state preparation of a cavity vacuum state to cavity cat state in a cavity-coupled double quantum dot system.
+The original goal was to first optimize for high state fidelity using an effective Hamiltonian of the system and make sure that the optimized pulses work well when using the original full Hamiltonian.
+If this is to be achieved, other potential goals include optimization under physical pulse constraints, optimization for a open quantum system (considering noise), optimization for other state optimizations, optimization for gates.
+However, several challenges were encountered that prevented reaching the initial goals within the given timeframe. Here I list the goals not achieved and outline the challenges faced.
+Firstly, QuTip's implementation made it difficult to optimize the fidelity of the cavity state alone by partial tracing out the qubit state, requiring a significant rewrite of the optimization code. 
+Although the Krotov package seems to allow for customization of fidelity, this was not attempted due to time constraints. 
+Secondly, the project did not fully consider all physical constraints on the control pulses, with only pulse amplitude constraints being implemented. 
+The CRAB algorithm could be used to incorporate more constraints and optimize functional basis coefficients for smoother pulses, but requires more trial and error. This was also not attempted due to time constraints.
+Thirdly, the native oscillation frequency of the cavity caused fast oscillations in the optimized pulses, which could potentially be addressed but issues also came up. See chapter \ref{sec:further_discussions} for more details.
+Though it was unfortunate that many of the original goals were not achieved due to time constraints, all of these challenges seem to be technical difficulties. 
+With more time, these technical programming issues could be resolved.
 
-The control and manipulation of quantum systems are central to the realization of quantum computing. Quantum optimal control theory provides a framework for designing control protocols that achieve desired quantum operations with high fidelity. In this context, the goal is to find optimal control fields that drive the evolution of the quantum system from an initial state to a target state or implement a specific unitary transformation. Techniques such as Gradient Ascent Pulse Engineering (GRAPE) and Chopped Random Basis (CRAB) optimization are commonly used to find these optimal control fields \cite{KHANEJA2005296}. These methods involve numerically optimizing a cost function, typically related to the fidelity between the achieved and desired quantum states, subject to constraints imposed by the physical system and control hardware.
-
-In this report, we explore the application of quantum optimal control theory to the cavity-coupled DQD system for state preparation tasks. We compare the performance of different control optimization algorithms and investigate the effects of various approximations and constraints on the control fidelity. Through this study, we aim to demonstrate the potential of the cavity-coupled DQD system as a platform for quantum computing and contribute to the development of robust control techniques for quantum technologies.
-
-% gpt
-
-Quantum computing is a revolutionary technology that leverages the principles of quantum mechanics to perform calculations at speeds unattainable by classical computers. Unlike classical computers, which use bits as the basic unit of information (either 0 or 1), quantum computers use quantum bits, or qubits, which can exist in a superposition of both 0 and 1 simultaneously. This property, along with entanglement and interference, enables quantum computers to process a vast amount of information in parallel, making them potentially capable of solving certain complex problems much more efficiently than classical computers \cite{Nielsen2010}.
-
-There are several physical implementations of quantum computers, each with its unique advantages and challenges. Some of the most prominent include:
-
-Superconducting Qubits: These are the most widely used and are based on superconducting circuits cooled to extremely low temperatures. Companies like IBM and Google use this approach in their quantum computers \cite{devoret2013superconducting}.
-Trapped Ions: In this implementation, ions are trapped using electromagnetic fields and manipulated with lasers. It offers high precision and long coherence times but can be challenging to scale up \cite{blatt2012quantum}.
-Topological Qubits: Based on exotic particles called anyons, topological qubits are believed to be more resistant to errors, but the technology is still in its early stages \cite{kitaev2003fault}.
-Quantum Dots and Silicon-based Qubits: These approaches aim to leverage semiconductor manufacturing techniques to build scalable quantum computers \cite{loss1998quantum}.
-In traditional quantum computing, qubits are encoded using two-level systems, where each qubit can represent a 0 or a 1 in a superposition. In contrast, continuous variable quantum computing uses continuous degrees of freedom, such as the position and momentum of a particle, to represent quantum information. This allows for the encoding of logical qubits onto multiple physical qubits, offering a different approach to error correction and information processing \cite{weedbrook2012gaussian}.
-
-State preparation is a crucial step in quantum computing, as it involves initializing the qubits in a specific quantum state before any computation can begin. The accuracy of state preparation directly impacts the reliability and performance of quantum algorithms. Errors in state preparation can propagate throughout the computation, leading to incorrect results. Additionally, many quantum algorithms, such as those for quantum simulation or quantum machine learning, require the preparation of complex quantum states as their initial step. Therefore, developing techniques for precise and efficient state preparation is essential for the advancement of quantum computing \cite{nielsen2002quantum}.
-
-In summary, quantum computing is a cutting-edge field that exploits the principles of quantum mechanics to achieve computational power beyond the reach of classical computers. Its development involves various physical implementations, each with its own set of challenges and advantages. The distinction between traditional qubits and continuous variable quantum computing offers different avenues for error correction and information processing. Finally, state preparation is a critical aspect of quantum computing, as it sets the stage for accurate and effective quantum computations.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Physical systems and Hamiltonians}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Physical System and Hamiltonians: DQD-cavity}
 %%%%%% 草稿 %%%%%%%%
-% discuss 
+% discuss
 % - Full Original Hamiltonian 
-% - effective Hamiltonian (same as )
+% - effective Hamiltonian 
+% - link clearly the Hamiltonians here to the Hamiltonians used in the methodology chapter later
 % main papers: 
 % - Optimal dispersive readout of a spin qubit with a microwave resonator
 
-% why is cavity coupled to QDQ spin intresting
-% DQD Hamiltonian
 %%%%%% 草稿 %%%%%%%%
-Strong coupling of semiconductor spin qubits to superconducting microwave resonators was recently demonstrated. \cite{Mi2018}\cite{Landig2018}
+First to reiterate briefly on why we are interested in a cavity-DQD system. Strong coupling of semiconductor spin qubits to superconducting microwave resonators was recently demonstrated. \cite{Mi2018}\cite{Landig2018}
 These breakthroughs can potentially combine the long coherence times of solid-state spin qubits with the long-distance connectivity, fast control, and fast high-fidelity quantum-non-demolition readout of existing superconducting qubit implementations.\cite{D_Anjou_2019}
+Although this project doesn't reach the part of readout, but only considers state preparation in this physical system. This serves as a motivation. 
+The chapter below is adapted from \cite{D_Anjou_2019} and \cite{reinhold2019} as they explain the physical system and Hamiltonians very well. 
+This project focuses much more on optimization than on the physical systems themselves.
+\\
 We consider a DQD defined by a double-well potential $V(z)$ whose wells are separated by a distance $2d$, as depicted in Fig \ref{fig:DQD}.
 The two lowest-energy orbitals of the right and left wells are labelled $|\widetilde{R}\rangle$ and $|\widetilde{L}\rangle$, respectively, with corresponding energies $\epsilon_R$ and $\epsilon_L$.
 The energy detuning between the right and left orbitals is $\epsilon=\epsilon_R-\epsilon_L$, and the tunnel coupling between them is $t_c>0$. 
@@ -162,14 +251,14 @@ Note that the description of electronic motion in terms of the two lowest-energy
     \centering
     \includegraphics[width=0.5\linewidth]{DQD.png}
     \caption{
-        (a) Schematic representation of the double-well potential $V(z)$ forming the DQD. The detuning and tunnel coupling between the right dot orbital $|\widetilde{R}\rangle$ and left dot orbital $|\widetilde{L}\rangle$ are $\epsilon$ and $t_c$, respectively. The DQD is subject to a longitudinal magnetic field $B_z \hat{z}$ and an external transverse magnetic field gradient $\partial_z B_x(z) \hat{x}$ such that the field $B_x$ varies by $b_x=\partial_z B_x(z) \times d$ over the half interdot distance $d$. (b) Setup for the dispersive readout of a DQD embedded in a two-port microwave resonator with resonance frequency $\omega_r$. The DQD and the resonator electric field (green arrows) interact via the electric dipole coupling $g_c$. The resonator can be driven in the $i$ th port by an input field $b_i^{\text {in }}(t)$. The output fields $b_i^{\text {out }}(t)$ then carry information on the state of the DQD. The leakage rates of ports 1 and 2 to their respective feedlines are $\kappa_1$ and $\kappa_2$.
+        (a) Schematic representation of the double-well potential $V(z)$ forming the DQD. The detuning and tunnel coupling between the right dot orbital $|\widetilde{R}\rangle$ and left dot orbital $|\widetilde{L}\rangle$ are $\epsilon$ and $t_c$, respectively. The DQD is subject to a longitudinal magnetic field $B_z \hat{z}$ and an external transverse magnetic field gradient $\partial_z B_x(z) \hat{x}$ such that the field $B_x$ varies by $b_x=\partial_z B_x(z) \times d$ over the half interdot distance $d$. (b) Setup for the dispersive readout of a DQD embedded in a two-port microwave resonator with resonance frequency $\omega_r$. The DQD and the resonator electric field (green arrows) interact via the electric dipole coupling $g_c$. The resonator can be driven in the $i$ th port by an input field $b_i^{\text {in }}(t)$. The output fields $b_i^{\text {out }}(t)$ then carry information on the state of the DQD. The leakage rates of ports 1 and 2 to their respective feedlines are $\kappa_1$ and $\kappa_2$.\cite{D_Anjou_2019}
     }
     \label{fig:DQD}
 \end{figure}
 
 % Double-quantum-dot-resonator interaction
 The electric field of the resonator couples directly to the electric dipole moment of the electron, as shown schematically in Fig. \ref{fig:DQD}(b). 
-Due to the interaction of the spin and orbit degrees of freedom in Eq. \ref{eq:DQD}, the resonator photons can drive spin transitions. 
+Due to the interaction of the spin and orbit degrees of freedom, the resonator photons can drive spin transitions. 
 The Hamiltonian of the combined resonator and DQD system is
 \begin{equation}\label{eq:DQD_resonator_Hamiltonian}
     \begin{aligned} 
@@ -183,14 +272,14 @@ In Eq. \ref{eq:DQD_resonator_Hamiltonian}, $H_r$ is the free Hamiltonian for a s
 The resonance frequency of the resonator is $\omega_r>0$ and the strength of the dipole coupling is $g_c$.
 
 % Double-quantum-dot eigenbasis and spin qubit
-The DQD Hamiltonian, Eq. (1), can be diagonalized exactly as detailed in Appendix A. Expressed in its eigenbasis, the Hamiltonian $H_d$ takes the form
+The DQD Hamiltonian, Eq. (1), can be diagonalized exactly as detailed in cite{D_Anjou_2019} Appendix A. Expressed in its eigenbasis, the Hamiltonian $H_d$ takes the form
 \begin{equation}\label{eq:DQD_Hamiltonian_in_eigenbasis}
     H_d=\frac{E_m}{2} \tau_z+\frac{E_s}{2} \sigma_z,    
 \end{equation}
 
 where the $\tau_i$ and the $\sigma_i$ are now Pauli matrices in the eigenbasis $\left|\tau_z ; \sigma_z\right\rangle$ of $H_d$ dressed by the field gradient. 
 Here $\tau_z= \pm$ labels the dressed "molecular-like" states and $\sigma_z=\uparrow(\downarrow)$ labels the dressed "spin-like" states [67]. 
-Exact expressions for the molecular-like and spin-like Larmour frequencies $E_m$ and $E_s$ are derived in Appendix A. The energy-level diagram of the DQD is illustrated in Fig. 2, where we have also introduced the transition frequencies $E_{ \pm}=E_m \pm E_s$. 
+Exact expressions for the molecular-like and spin-like Larmour frequencies $E_m$ and $E_s$ are derived in \cite{D_Anjou_2019} Appendix A. The energy-level diagram of the DQD is illustrated in Fig. 2, where we have also introduced the transition frequencies $E_{ \pm}=E_m \pm E_s$. 
 In the following, we consider the spin qubit formed from the two dressed spin-like eigenstates spanning the molecular ground state. 
 Specifically, we choose the computational basis $\{|1\rangle,|0\rangle\}=$ $\{|-; \uparrow\rangle,|-; \downarrow\rangle\}$. 
 Despite their spin-like character, the electric dipole matrix element between these two states is finite and transitions between them can be induced electrically. 
@@ -205,82 +294,26 @@ In particular, the DQD-resonator interaction of Eq. (2) is written in the new ba
 
 Here $\left\{g_m, g_s, g_{+}, g_{-}\right\}$are the coupling strengths of the resonator to the DQD transitions of frequencies $\left\{E_m, E_s, E_{+}, E_{-}\right\}$ illustrated in Fig. 2. 
 In addition, $g_{m p}$ and $g_{s p}$ are couplings arising from the finite dc electric polarizabilities of the molecular electric dipole and of the spin, respectively. 
-Exact expressions for the $g_i$ are given in Appendix A. In Eq. (10), the term $g_s \tau_z \sigma_x\left(a+a^{\dagger}\right)$ exchanges energy between the resonator and the spin qubit. It can thus be exploited for resonatorassisted qubit control and readout. 
-As will be discussed in Sec. IV F, the couplings $g_{ \pm}$of the resonator to the transitions of frequencies $E_{ \pm}$can also be harnessed to improve readout performance.
-
-In the remainder of this article, we focus on the limit of weak field gradient. In particular, we assume that the direction of the spin quantization axis is not substantially modified by the presence of the field gradient, $\left|b_x \sin \theta\right| \ll$ $\left|B_z\right|$. Moreover, we assume that the admixture of spin and orbit is weak, $\left|b_x \cos \theta\right| \ll \min \left(\left|\Omega-B_z\right|,\left|\Omega+B_z\right|\right)$. Under these conditions, the dressed molecular and spin Larmour frequencies are
-\begin{equation}\label{eq:Larmour_frequencies}
-    \begin{aligned}
-        & E_m \approx \Omega+\frac{b_x}{2} \cos \theta \sin \bar{\phi}, \\
-        & E_s \approx B_z-\frac{B_z}{2} \frac{b_x}{2 t_c}\left(1-\frac{\epsilon^2}{B_z^2}\right) \sin \bar{\phi}, \\
-        & \sin \bar{\phi} \approx \frac{2 t_c b_x}{\Omega^2-B_z^2},
-    \end{aligned}
-\end{equation}
-where $\bar{\phi} \ll \pi / 2$ is the effective spin-orbit mixing angle arising from the field gradient. Approximate expressions may also be obtained for the couplings $g_i$. In particular, the molecularphoton coupling $g_m$ and spin-photon coupling $g_s$ become
-\begin{equation}\label{eq:couplings}
-    g_m \approx g_c \cos \theta \cos \bar{\phi}, \quad g_s \approx g_c \cos \theta \sin \bar{\phi} .
+Exact expressions for the $g_i$ are given in cite{D_Anjou_2019} Appendix A.
+\\
+The above chapter has been mostly lifted from \cite{D_Anjou_2019} for a detailed explaination of the original full Hamiltonian
+of the full Hamiltonian (as referenced later in chapter \ref{sec:further_discussions}).
+However, as discussed earlier this project focuses more on optimization using the effective Hamiltonian in the dispersive regime where the DQD is effectively a two-level system. 
+Derivation of the effective Hamiltonian is well written in \cite{reinhold2019} chapter 2.3, key formulas are reproduced here for later reference. 
+The model effective Hamiltonian is given by, 
+\begin{equation}\label{eq:effective_Hamiltonian}
+    \boldsymbol{H}=\omega_c \boldsymbol{a}^{\dagger} \boldsymbol{a}+\frac{\omega_q}{2} \boldsymbol{\sigma}_z+\frac{\chi}{2} \boldsymbol{a}^{\dagger} \boldsymbol{a} \boldsymbol{\sigma}_z,    
 \end{equation}
 
-% Dispersive Hamiltonian
-%  Dispersive limit
-Dispersive readout of the spin is performed by probing the resonator near its resonance frequency, $\omega_{\text {in }} \approx \omega_r$, and observing the spin-dependent phase of the output field. For many quantum information processing tasks, it is highly desirable that the readout perturbs the system as little as possible. To minimize such unwanted backaction on the system, we work in the so-called dispersive limit. In that limit, all DQD-resonator interaction terms in Eq. (10) are off-resonant. A given interaction term is off-resonant if its magnitude is smaller than the detuning of the resonator with the transition it induces. Let $\langle n\rangle \approx 4 \kappa_i\left|\beta_i^{\text {in }}\right|^2 / \kappa^2$ be the average number of photons entering the resonator from port $i$. Noting that the resonator field is of order $a \sim \sqrt{\langle n\rangle}$, it is easily verified that a term $\propto g_j$ in Eq. (10) is off-resonant if $\langle n\rangle$ is smaller than the so-called critical photon number,
-$$
-n_{c, j} \approx \frac{1}{4} \max \left(\left|\eta_j\right|,\left|\eta_j^{\prime}\right|\right)^{-2} .
-$$
+with $\chi=2 g^2 / \Delta$. This is the correct form only for an actual two-level system. 
+For a multi-level system like a transmon this is only an approximation valid when the detuning to the ge transition is small compared with the detuning to other transitions.
+This effective is used later in chapter \ref{sec:state_preparation}. 
+The constants in this effective Hamiltonian include esonator frequency, qubit anharmonicity and cavity-qubit coupling strength. 
+The numerical values of these constants used later in chapter \ref{sec:state_preparation} are typical values from experiments. 
+However, exact numbers of these constants may depend on specific physical systems that the optimization scheme disucssed in this report is applied to. 
 
-Here $\left|\eta_j\right| \ll 1$ and $\left|\eta_j^{\prime}\right| \ll 1$ are the small dimensionless parameters that control the dispersive limit. They have the form (see Appendix B for details)
-$$
-\eta_j=\frac{2 E_j g_j}{\omega_r^2-E_j^2}, \quad \eta_j^{\prime}=\frac{\omega_r}{E_j} \eta_j .
-$$
-
-The condition $\langle n\rangle<n_{c, j}$ ensures that the probe photons excite a given transition between eigenstates of $H$ at a rate that is smaller than the relaxation rate for that transition [68]. Thus, the condition $\langle n\rangle<n_{c, j}$ ensures that probe photons close to resonance with a given transition $j$ excite that transition with negligible probability [69]. A detailed analysis of these transition rates and their effect on readout is beyond the scope of this work. In the following, we will reserve the symbol $n_c$ for the critical photon number of the spin transition, $n_c \equiv n_{c, s}$.
-
-In the dispersive limit, the Hamiltonian, Eq. (2), can be diagonalized to first order in $g_c$ using a Schrieffer-Wolff
-transformation. The resulting dispersive Hamiltonian for the DQD-resonator interaction is derived in Appendix B and has the form
-$$
-H_{\text {dis }}=H_0+V_{\text {dis }}+V_{\text {tr }} .
-$$
-
-Here $H_0=H_d+H_r$ is the free Hamiltonian. The interaction is separated into a dispersive part $V_{\text {dis }}$ that commutes with $H_0$ and a transition-inducing part $V_{\mathrm{tr}}$ that does not commute with $H_0$. The dispersive interaction has the form:
-$$
-V_{\mathrm{dis}}=-\frac{1}{2} \chi_0 \tau_z \sigma_z-\left(\chi_m \tau_z+\chi_s \sigma_z\right)\left(a^{\dagger} a+\frac{1}{2}\right) .
-$$
-
-Here $\chi_m \tau_z$ and $\chi_s \sigma_z$ are the dispersive energy shifts of the resonator frequency due to coupling with the molecular electric dipole and the spin, respectively. In addition, $-\chi_0 \tau_z \sigma_z / 2$ is an Ising-like dispersive interaction between the molecular electric dipole and the spin. Expressions for $\chi_m, \chi_s$, and $\chi_0$ are given in Appendix B. As discussed in Sec. III B, the spin dispersive shift, $\chi_s \sigma_z$, may be exploited for dispersive readout of the spin. Contrary to the dispersive interaction, the offdiagonal term $V_{\text {tr }}$ induces transitions between the eigenstates of $H_0$. Specifically, $V_{\mathrm{tr}}$ can generate all the DQD transitions of Fig. 2 via the exchange of either 0 or 2 photons with the resonator. Thus, a transition term inducing a transition $j$ can be neglected if its magnitude is smaller than $\omega_r,\left|E_j\right|$, and $\left|2 \omega_r \pm E_j\right|$ (a concrete example is given in Appendix C). These off-resonance conditions can be seen as a higher-order dispersive approximation. They ensure that the operators appearing in Eq. (16) are expressed in a basis that is close to the true eigenbasis of the full system Hamiltonian $H$. If the transition term becomes resonant, the resulting change of basis enables probe photons to generate new transitions between the system eigenstates. The above off-resonance conditions are typically satisfied in the dispersive limit (though not always, see Fig. 5). We will therefore ignore the transition term in the following analysis until stated otherwise.
-
-% Effective spin-qubit Hamiltonian
-In the absence of photon-induced DQD transitions, the dispersive Hamiltonian, Eq. (16), may safely be projected into the logical subspace of the spin qubit to obtain an effective dispersive Hamiltonian for the spin qubit, in the form (up to an irrelevant constant):
-$$
-H_{\mathrm{dis}}^{\mathrm{eff}}=\left(\omega_r^{\prime}-\chi_s \sigma_z\right) a^{\dagger} a+\frac{1}{2}\left(E_s^{\prime}-\chi_s\right) \sigma_z .
-$$
-
-Here $\omega_r^{\prime}=\omega_r+\chi_m$ and $E_s^{\prime}=E_s+\chi_0$ are renormalized resonator and spin-qubit frequencies, respectively. In addition, $\chi_s \sigma_z$ is the spin-state-dependent dispersive shift of the resonator frequency which enables dispersive readout. The full expression for the dispersive shift is
-$$
-\chi_s=\frac{2 E_s g_s^2}{\omega_r^2-E_s^2}+\frac{E_{+} g_{+}^2}{\omega_r^2-E_{+}^2}-\frac{E_{-} g_{-}^2}{\omega_r^2-E_{-}^2} .
-$$
-
-When the resonator is close to resonance with the spin transition but far detuned from $E_{+}$and $E_{-}$, the dispersive shift takes the more familiar form $\chi_s \approx g_s^2 / \Delta$, where $\Delta=\omega_r-E_s$ is the spin-resonator detuning. We will assume that this is the case for most of the analysis of Sec. IV. In Sec. IV F, however, we will see that the various contributions in Eq. (18) can interfere constructively and thereby significantly improve
-
-readout performance. This mirrors the so-called straddling regime of superconducting qubits [57-60]. Finally, note that the renormalization of the resonator and spin frequencies are unimportant for the optimization of the dispersive readout. As discussed in Sec. IV B, the readout response only depends on the detuning between the probe frequency $\omega_{\text {in }}$ and the renormalized resonator frequency $\omega_r^{\prime}$. Thus, the renormalization of the $\omega_r$ can always be compensated by adjusting $\omega_{\text {in }}$. Moreover, inspection of the expression for $\chi_0$ given in Appendix B shows that $\chi_0 \lesssim \chi_s \ll \Delta$ near the DQD-resonator resonances. Therefore, the renormalization of the spin frequency may safely be neglected.
-
-All operators appearing in Eq. (17), and in particular $\sigma_z$, are dressed by the DQD-resonator interaction to first order in $g_c$. Thus, the spin qubit we consider is in fact formed by the states $\{|-; \uparrow\rangle,|-; \downarrow\rangle\}$ dressed by resonator photons. In the regime where both the resonator and the qubit are near-resonant with the probe, the effective driving Hamiltonian in the dressed basis takes the form [see the discussion following Eq. (B15) in Appendix B]
-$$
-\begin{aligned}
-V_{\text {in }}^{\text {eff }}(t)= & i \sum_i \sqrt{\kappa_i}\left[b_i^{\text {in }}(t)^{\dagger} a-b_i^{\text {in }}(t) a^{\dagger}\right] \\
-& +i \frac{g_s}{\Delta} \sum_i \sqrt{\kappa_i}\left[b_i^{\text {in }}(t)^{\dagger} \sigma_{-}-b_i^{\text {in }}(t) \sigma_{+}\right] .
-\end{aligned}
-$$
-
-The second term enables the direct exchange of energy between the spin qubit and the resonator environment. In particular, the spin qubit may relax via the Purcell emission of a photon in the resonator ports (see Sec. IV C). Correspondingly, the input-output relation of Eq. (6) becomes
-$$
-b_i^{\text {out }}(t)=b_i^{\text {in }}(t)+\sqrt{\kappa_i} a+\sqrt{\kappa_i} \frac{g_s}{\Delta} \sigma_{-},
-$$
-where the last term describes output radiation emitted by coherent spin oscillations. When performing dispersive readout, the detector is typically locked in to the frequency $\omega_{\text {in }} \approx \omega_r$. Thus, the qubit emission is filtered out provided the detector bandwidth is smaller than the spin-resonator detuning $|\Delta|$. Even if this were not the case, the qubit necessarily loses all coherence as soon as the two qubit states can be distinguished due to the fundamental quantum backaction introduced by readout. We will therefore ignore the last term in what follows. The expectation values of the output fields are then given by
-$$
-\beta_i^{\text {out }}(t)=\beta_i^{\text {in }}(t)+\sqrt{\kappa_i}\langle a\rangle .
-$$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Methodology: Quantum Optimal Control}
+\chapter{Methodology: Quantum Optimal Control}
 %%%%%% 草稿 %%%%%%%%
 % sec 1: overview of quantum control (brief)
 %      - take from "Introduction to quantum control and dynamics"
@@ -290,6 +323,9 @@ $$
 % sec 3: GRAPE, CRAB, Krotov's method
 %      - basic idea
 %      - introduce qutip, krotov python libraries
+% TODO：
+% - truncation issue -> Reinhold: 
+%         Optimizing a full unitary operation is sensible for qubits, or systems of a few qubits, but in the cavity manipulations to be performed in the following sections, this is not usually a sensible operation, since doing operations involving states at the border of the truncation (i.e. the maximum photon number state considered in the simulation), would typically require a larger truncation to simulate accurately (driving $\ket{n_{ph}}$) will almost always in part bring us partially to $\ket{n_{ph} + 1}$.
 
 % briefly bridge to and cover the overview of content of this report:
 % 1. basic theory on optimization, QuTip, GRAPE, CRAB, etc...
@@ -297,7 +333,7 @@ $$
 % 3. compare fidelity from approximate Hamiltonian with fidelity from original Hamiltonian
 % 4. possible future work: gate design, model noise
 %%%%%% 草稿 %%%%%%%%
-In quantum control we look to prepare some specific state, effect some state-to-state transfer, or effect some transformation (or gate) on a quantum system. 
+In quantum control we look to prepare some specific state, effect some state-to-state preparation, or effect some transformation (or gate) on a quantum system. 
 For a given quantum system there will always be factors that effect the dynamics that are outside of our control. As examples, the interactions between elements of the system or a magnetic field required to trap the system. 
 However, there may be methods of affecting the dynamics in a controlled way, such as the time varying amplitude of the electric component of an interacting laser field. 
 And so this leads to some questions; given a specific quantum system with known time-independent dynamics generator (referred to as the drift dynamics generators) and set of externally controllable fields for which the interaction can be described by control dynamics generators:
@@ -311,11 +347,11 @@ The solutions to the second question can be determined through optimal control a
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{principles_quantum_control.png}
-    \caption{Schematic showing the principle of quantum control}
+    \caption{Schematic showing the principle of quantum control\cite{Johansson2013}}
     \label{fig:principles_quantum_control}
 \end{figure}
 
-Here we will first consider only finite-dimensional, closed quantum systems.In closed quantum systems the states can be represented by kets, and the transformations on these states are unitary operators. 
+Here we will first consider only finite-dimensional, closed quantum systems. In closed quantum systems the states can be represented by kets, and the transformations on these states are unitary operators. 
 The dynamics generators are Hamiltonians. The combined Hamiltonian for the system is given by
 $$
 H(t)=H_0+\sum_{j=1} u_j(t) H_j
@@ -337,7 +373,7 @@ $$
 \frac{d}{d t} U=-i H(t) U, \quad U(0)=\mathbb{1}
 $$
 
-We can use optimal control algorithms to determine a set of $u_j$ that will drive our system from $\left|\psi_0\right\rangle$ to $\left|\psi_1\right\rangle$, this is state-to-state transfer, or drive the system from some arbitary state to a given state $\left|\psi_1\right\rangle$, which is state preparation, or effect some unitary transformation $U_{\text {target }}$, called gate synthesis. 
+We can use optimal control algorithms to determine a set of $u_j$ that will drive our system from $\left|\psi_0\right\rangle$ to $\left|\psi_1\right\rangle$, this is state-to-state preparation, or drive the system from some arbitary state to a given state $\left|\psi_1\right\rangle$, which is state preparation, or effect some unitary transformation $U_{\text {target }}$, called gate synthesis. 
 The latter of these is most important in quantum computation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -346,31 +382,26 @@ The GRadient Ascent Pulse Engineering was first proposed in \cite{KHANEJA2005296
 Overview of GRAPE algorithm as implemented in QuTip is as follows. 
 Solutions to Schrödinger's equation for a time-dependent Hamiltonian are not generally possible to obtain analytically. 
 Therefore, a piecewise constant approximation to the pulse amplitudes is made. Time allowed for the system to evolve $T$ is split into $M$ timeslots (typically these are of equal duration), during which the control amplitude is assumed to remain constant. 
+\\
+In the GRAPE algorithm, the combined Hamiltonian is approximated as a piecewise constant function, where the control amplitudes are assumed to be constant within each timeslot. 
+Mathematically, this can be expressed as $H(t) \approx H\left(t_k\right)=H_0+\sum_{j=1}^M u_{j k} H_j$, where $k$ is a timeslot index, $j$ is the control index, and $M$ is the number of controls. 
+The variable $t_k$ represents the evolution time at the start of the timeslot, and $u_{jk}$ is the amplitude of control $j$ throughout timeslot $k$. 
+The total number of time steps, denoted by $N$, is equal to the total evolution time $T$ divided by the timeslot duration $\delta t$.
+Though in my code in chapter \ref{sec:state_preparation}, I set number of time steps and evolution time, which then determines the time slot duration $\delta t$.
+\\
+Given the piecewise constant approximation of the Hamiltonian, the time evolution operator, also known as the propagator, within each timeslot can be calculated using the matrix exponential: $U_k:=e^{-i H\left(t_k\right) \Delta t_k}$. 
+To obtain the overall evolution up to and including any timeslot $k$ (including the full evolution at $k=M$), the propagators for each timeslot are multiplied together in chronological order: $U\left(t_k\right):=U_k U_{k-1} \cdots U_1 U_0$.
+\\
+To quantify the effectiveness of the control pulses, a figure of merit or fidelity is introduced. 
+This metric measures how close the achieved evolution is to the desired target state or transformation, based on the control amplitudes in the timeslots. 
+For unitary systems, the typical figure of merit is the normalised overlap between the achieved evolution and the target. 
+A more detailed discussion of the figure of merit can be found in chapter \ref{sec:figure_of_merit}.
+\\
+The optimization problem in GRAPE can be formulated as follows. 
+With the piecewise constant approximation, there are now $N\times M$ variables (the control amplitudes in each timeslot) that need to be optimized to minimize the figure of merit. 
+This transforms the problem into a finite multi-variable optimization problem, for which many established methods exist. 
+These methods are discussed in more detail in chapter \ref{sec:finite_variables_optimization}. In the QuTiP Qtrl GRAPE implementation, the default optimization method is the L-BFGS-B algorithm, which is available through the Scipy library in Python.
 
-\begin{itemize}
-    \item The combined Hamiltonian is approximated as: $H(t) \approx H\left(t_k\right)=H_0+\sum_{j=1}^M u_{j k} H_j$ \\
-    where,  k is a timeslot index, 
-            j is the control index, 
-            and M is the number of controls. 
-            Hence $t_k$ is the evolution time at the start of the timeslot, 
-            and $u_{jk}$ is the amplitude of control j throughout timeslot k.
-            Number of time steps $N=T/\delta t$.\\
-    \item The time evolution operator, or propagator, within the timeslot can then be calculated as:  
-            $U_k:=e^{-i H\left(t_k\right) \Delta t_k}$ \\
-            where, $\Delta t_k$ is the duration of the timeslot.\\
-            The evolution up to (and including) any timeslot k (including the full evolution k=M) can the be calculated as 
-            $U\left(t_k\right):=U_k U_{k-1} \cdots U_1 U_0$
-    \item A figure of merit or fidelity is some measure of how close the evolution is to the target, based on the control amplitudes in the timeslots. 
-            The typical figure of merit for unitary systems is the normalised overlap of the evolution and the target. 
-            See section \ref{sec:figure_of_merit} for details. 
-    \item optimization pronlem and algorithm: 
-        \begin{enumerate}
-            \item There are now $N\times M$ variables to minimize the figure of merit. 
-                The problem becomes a \underline{finite multi-variable optimization problem}.
-            \item There are many established methods for this kind of problem. see section \ref{sec:finite_variables_optimization} for details. 
-                The default method in the QuTiP Qtrl GRAPE implementation is the L-BFGS-B method in Scipy.
-        \end{enumerate}
-\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{CRAB: Chopped RAndom Basis}
@@ -395,10 +426,18 @@ Therefore, a piecewise constant approximation to the pulse amplitudes is made. T
         \end{itemize}
     \item "dressed" CRAB: a variant of CRAB that is introduced in \cite{PhysRevA.92.062343} that allows to escape local minima. 
 \end{enumerate}
+
+As opposed to GRAPE which optimises time-slice pulse amplitudes, the Chopped RAndom Basis (CRAB) algorithm optimizes the coefficients of a fintie set of functional basis of a chosen functional basis set. 
+CRAB algorithm is particularly useful when the pulse complexity is very low \cite{PhysRevLett.106.190501, PhysRevA.84.022326}.
+Here we are referring to relatively smooth pulses without singularities or sharp features. 
+Such pulses are often more desirable for experiments as actuators at different levels from the pulse generators all the way to the controlled physical often require certain response time. 
+In these cases, instead of optimizing the control amplitudes at each time slice, CRAB transforms the optimal control problem into a search over a few parameters by introducing a physically motivated function basis that constructs the pulse. 
+This approach significantly reduces the number of optimization parameters compared to the number of time slices needed for accurate quantum dynamics simulations in gradient-based algorithms, often by orders of magnitude. 
+As a result, CRAB can efficiently optimize smooth pulses while incorporating realistic experimental constraints.
+However, note that CRAB by itself does not guarantee smooth pulses. If a functional basis with basis elements containing discontinuities is chosen, the CRAB solution will inherit those discontinuities.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Figure of merit, cost function}\label{sec:figure_of_merit}
-state transfer case
-single-state state transfer: 
+\subsection{Figure of Merit}\label{sec:figure_of_merit}
+For state preparation case, we have the following evolved state fidelity as the figure of merit:
 \begin{align*}
     f(\vec{\epsilon}(t)) &= \mathcal{F}(\vec{\epsilon}(t)) \quad \text{state fidelity}\\
     &\equiv \abs{\bra{\psi_{targ}} U(T,\vec{\epsilon}(t)) \ket{\psi_{init}}}^2 \\
@@ -411,141 +450,163 @@ single-state state transfer:
         U_NU_{N-1}...U_1
         \ket{\psi_{init}}}^2, \quad \text{where, } U_k=\exp{\frac{i\delta t}{\hbar}H(\vec{\epsilon}(k\delta t))} \\
 \end{align*}
-
-multi-state state transfer:
-\begin{align*}
-    f(\vec{\epsilon}(t)) &= \mathcal{F}(\vec{\epsilon}(t)) \quad \text{Fidelity}\\
-    &\equiv 
-        \begin{cases}
-            \abs{\sum_k \bra{\psi_{targ}^{(k)}} U(T,\vec{\epsilon}(t)) \ket{\psi_{init}^{(k)}}}^2 &\text{coherent} \\
-            \sum_k \abs{\bra{\psi_{targ}^{(k)}} U(T,\vec{\epsilon}(t)) \ket{\psi_{init}^{(k)}}}^2 &\text{inoherent}
-        \end{cases} \\
-    &\text{for coherent case with number of state = dimension of Hilbert space,}\\
-    &=\abs{\text{Tr}\left[U(T,\vec{\epsilon}(t))U_{targ}^{\dagger}\right]}^2 \quad \text{unitary fidelity}\\
-\end{align*}
+However, for our cavity-DQD composite system the composist system states need to be traced over the qubit state to obtain the cavity state fidelity. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Finite variables optimization algorithms}\label{sec:finite_variables_optimization}
+Here we discuss 
 \begin{equation}
     H(\vec{\epsilon}(t)) = H_0 + \sum_{k=1}^m \epsilon_k(t) H_k
 \end{equation}
-Goal: Find optimal control field $\vec{\epsilon}(t)$ that optimizes some function $f(\vec{\epsilon}(t)) = f(H(\vec{\epsilon}(t)))$. \\
+The goal of quantum optimal control is to find the optimal control field $\vec{\epsilon}(t)$ that optimizes a given function $f(\vec{\epsilon}(t)) = f(H(\vec{\epsilon}(t)))$, where $H(\vec{\epsilon}(t))$ represents the Hamiltonian of the quantum system under the influence of the control field. 
+The optimization procedure involves several key steps and considerations.
 \\
-Procedure: 
-\begin{enumerate}
-    \item To optimize a large number of parameters, we need:
-        \begin{enumerate}
-            \item an efficient means of calculating the gradients of cost function w.r.t parameters
-            \item sub-optial local minima are sufficiently unlikely or close to global minima
-        \end{enumerate}
-    \item Given methods to calculate cost function and gradients, we have two main classes of algorithm for performing optimization: 
-        \begin{itemize}
-            \item line-search methods: one alternates between picking a direction in parameter space, radiating from our current point, and subsequently performing a 1-d minimization protocol to find the minimum along this line. \\
-                $\rightarrow$ basic gradient descent: choose direction as gradient at the point. \\
-                $\rightarrow$ Newton method: choose direction using both gradient and Hessian matrix at the point. $\rightarrow$ quasi-Newton, L-BFGS
-            \item trust-region methods
-        \end{itemize}
-    \item calcualte gradient of $f(\vec{\epsilon}(t))$ with respect to $\vec{\epsilon}(t)$
-        \begin{enumerate}
-            \item For an analytical function $f(\vec{\epsilon})$, gradient is given by $\nabla f(\vec{\epsilon}) = \sum_{i=1}^m \frac{\partial f(\vec{\epsilon})}{\partial \epsilon_i} \hat{\epsilon}_i$
-            \item For discrete $\vec{\epsilon}$, gradient of $f(\vec{\epsilon})$ is given by the finite difference method.
-            \item approximate the gradient: skipping here.
-            \item When calculating / approximating gradient is too expensive, cosider optimization algorithm other than gradient descent.
-        \end{enumerate}
-    \item take a step (step size as a parameter) in the direction. \\
-        step size too small: optimization takes long\\
-        step size too large: may never reach true optima
-    \item calcualte gradient again
-    \item repeat until convergence
-\end{enumerate}
-
+To effectively optimize a large number of parameters, two important requirements must be met. 
+First, an efficient method for calculating the gradients of the cost function with respect to the parameters is essential. 
+Second, the optimization landscape should be such that sub-optimal local minima are either sufficiently unlikely or close to the global minimum, ensuring that the optimization algorithm can converge to a satisfactory solution.
+\\
+Given methods to calculate the cost function and its gradients, two main classes of algorithms can be employed for performing the optimization. 
+The first class is line-search methods, which alternate between selecting a direction in the parameter space, radiating from the current point, and performing a one-dimensional minimization along this line to find the minimum. 
+The most basic line-search method is gradient descent, which chooses the direction of steepest descent based on the gradient at the current point. 
+More advanced methods, such as the Newton method, utilize both the gradient and the Hessian matrix to determine the search direction. 
+Quasi-Newton methods, like the L-BFGS algorithm, approximate the Hessian matrix to improve convergence while reducing computational complexity. 
+The L-BFGS algorithm is employed in the QuTiP Qtrl GRAPE implementation, and is available through the Scipy library in Python.
+The second class of optimization algorithms is trust-region methods, which define a region around the current point within which a quadratic approximation of the cost function is considered reliable, and the optimization is performed within this trust region.
+\\
+The gradient of the cost function $f(\vec{\epsilon}(t))$ with respect to the control field $\vec{\epsilon}(t)$ plays a crucial role in many optimization algorithms. 
+For an analytical function $f(\vec{\epsilon})$, the gradient is given by $\nabla f(\vec{\epsilon}) = \sum_{i=1}^m \frac{\partial f(\vec{\epsilon})}{\partial \epsilon_i} \hat{\epsilon}_i$, where $m$ is the number of control parameters and $\hat{\epsilon}_i$ are unit vectors in the parameter space. 
+When dealing with discrete control fields, the gradient can be approximated using the finite difference method. In some cases, calculating or approximating the gradient may be computationally expensive, and alternative optimization algorithms that do not rely on gradient information should be considered.
+\\
+Once the gradient is calculated, the optimization algorithm takes a step in the direction of the negative gradient, with the step size being a tunable parameter. 
+If the step size is too small, the optimization process may be slow, requiring many iterations to converge. 
+On the other hand, if the step size is too large, the algorithm may overshoot the minimum and fail to converge to the true optimum. 
+The gradient is then recalculated at the new point, and the process is repeated iteratively until a convergence criterion is met, indicating that the optimal control field has been found.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Pulse constraints}
-\begin{enumerate}
-    \item constraints come from AWG(Arbitrary Wave Generator)'s amplitude and bandwidth constraints
-        $\rightarrow$ consider adding a set of constraint terms to the cost function
-        \begin{equation*}
-            f(\vec{\epsilon}(t)) = \mathcal{F}(\vec{\epsilon}(t)) + \sum_i \lambda_i g_i(\vec{\epsilon})
-        \end{equation*}
-    \item pulse amplitude: the output power of our AWG is limited, and thus to be feasible, we need $\epsilon(t) \le \epsilon_{max}$ for all t. $\rightarrow$ hard cutoff / soft cutoff
-        \begin{enumerate}
-            \item Employ an optimization algorithm which naturally allows for such constraints $\rightarrow$ see K-BFGS-B in scipy.optimize
-            \item Parametrise optimization problen 
-                \begin{align*}
-                    &\stackrel{\text{maximize}}{\vec{\epsilon}(t)}  \mathcal{F} (\vec{\epsilon}(t)) 
-                    \rightarrow \stackrel{\text{maximize}}{\vec{x}}  \mathcal{F} (\vec{\epsilon}(\vec{x})) \\
-                    &\text{where, } \epsilon_k = \epsilon_{max} \tanh{(x_k)} 
-                \end{align*}
-        \end{enumerate}
-    \item pulse bandwidth:   
-        \begin{itemize}
-            \item soft cutoff
-            \item hard cutoff
-            \item linear frequency-dependent penalty
-        \end{itemize}
-\end{enumerate}
-
-\subsubsection{Pulse constraint: limiting the intermediate photon number}
-Since computer memory is finite, we are forced to choose a photon number truncation nph such that the operator a becomes a $n_{ph} \times n_{ph}$ matrix. 
-When we do this, we are in effect replacing our infinite-dimensional oscillator with a finite-dimensional qudit. 
-This replacement is only valid if all of the system dynamics relevant for the desired state transfers occurs within the $\{\ket{0} ,\cdots , \ket{n_{ph} - 1} \}$ subspace. 
-For generic applied drives this is not the case. In order to enforce this property, we modify the optimization problem to find a solution which operates identically under several different values of $n_{ph}$.
-Writing the fidelity as computed with a truncation nph as $F_{n_{ph}}$, we have:
+\subsection{Pulse constraints} \label{sec:pulse_constraints}
+When designing optimal control pulses for quantum systems, it is essential to consider the constraints imposed by the experimental setup, particularly those related to the arbitrary waveform generator (AWG). 
+The AWG's amplitude and bandwidth limitations can significantly impact the feasibility and performance of the control pulses. 
+To incorporate these constraints into the optimization process, one approach is to add a set of constraint terms to the cost function, as shown in the following equation:
+\begin{equation*}
+    f(\vec{\epsilon}(t)) = \mathcal{F}(\vec{\epsilon}(t)) + \sum_i \lambda_i g_i(\vec{\epsilon})
+\end{equation*}
+Here, $\mathcal{F}(\vec{\epsilon}(t))$ represents the original cost function, such as the fidelity of the desired quantum operation, while $g_i(\vec{\epsilon})$ are the constraint terms with their respective weights $\lambda_i$.
+\\
+One of the most common constraints is the pulse amplitude, which is limited by the output power of the AWG. 
+To ensure that the control pulses are feasible, we require $\epsilon(t) \le \epsilon_{max}$ for all times $t$. 
+There are two main approaches to enforce this constraint: hard cutoff and soft cutoff. 
+The hard cutoff approach involves employing an optimization algorithm that naturally allows for such constraints, such as the L-BFGS-B algorithm available in the scipy.optimize module in Python. 
+Alternatively, the soft cutoff approach involves parametrizing the optimization problem by introducing a new set of variables $\vec{x}$ and expressing the control amplitudes as $\epsilon_k = \epsilon_{max} \tanh{(x_k)}$. 
+This ensures that the control amplitudes always remain within the allowed range.
+\\
+Another important constraint is the pulse bandwidth, which can be addressed using various methods. 
+Soft cutoff methods gradually penalize high-frequency components of the control pulses, while hard cutoff methods impose strict limits on the frequency content. 
+Linear frequency-dependent penalties can also be employed, where the penalty term increases linearly with the frequency of the control pulse components.
+\\
+In addition to the AWG constraints, the finite memory of classical computers poses a challenge when simulating quantum systems with infinite-dimensional Hilbert spaces, such as harmonic oscillators. 
+To address this issue, we truncate the Hilbert space by choosing a maximum photon number $n_{ph}$, effectively replacing the infinite-dimensional oscillator with a finite-dimensional qudit.
+However, this truncation is only valid if all the relevant system dynamics for the desired state transfers occur within the subspace spanned by ${\ket{0}, \cdots, \ket{n_{ph} - 1}}$.
+\\
+To ensure that the truncation does not introduce errors in the optimization process, we can modify the optimization problem to find a solution that operates identically under different values of $n_{ph}$. 
+By writing the fidelity as a function of the truncation level, $F_{n_{ph}}$, we can formulate the optimization problem as follows:
 \begin{equation}
     \stackrel{\text{maximize}}{\vec{\epsilon}} \left( \sum_k F_{n_{ph}+k} (\epsilon(t)) \right) - \left( \sum_i \lambda_i g_i (\epsilon(t)) \right)
 \end{equation}
+To enforce identical behavior across different truncations, we can add a penalty term that minimizes the discrepancy between the fidelities computed at different truncation levels:
+\begin{equation*}
+    g_{\text{discrepancy}}(\boldsymbol{\epsilon}(\boldsymbol{t}))=\sum_{k_1 \neq k_2}\left(\mathcal{F}{n{\mathrm{ph}}+k_1}(\boldsymbol{\epsilon}(t))-\mathcal{F}{n{\mathrm{ph}}+k_2}(\boldsymbol{\epsilon}(t))\right)^2
+\end{equation*}
+This penalty term effectively symmetrizes the cost function with respect to $n_{ph}$.
+An alternative and more direct approach is to add a penalty term that minimizes the occupation of the highest photon state ($\ket{n_{ph} - 1}$) in the truncated Hilbert space at any time during the evolution:
+\begin{equation*}
+    g_{\text{trajectory}}=\sum_{k=1}^N\left|\left\langle n_{\text{ph}}-1 \mid \psi_{\text{fwd}}^{(k)}\right\rangle\right|^2
+\end{equation*}
+This penalty term encourages the optimization algorithm to find control pulses that keep the system dynamics within the truncated subspace, ensuring the validity of the simulation.
+By incorporating these constraints and penalty terms into the optimization problem, we can design control pulses that are not only effective in achieving the desired quantum operation but also feasible to implement experimentally, taking into account the limitations of the AWG and the finite memory of classical computers used for simulations.
 
-\begin{itemize}
-    \item To enforce that the behavior is identical in the different truncations, we add the penalty term: 
-        \begin{equation*}
-            g_{\text {discrepancy }}(\boldsymbol{\epsilon}(\boldsymbol{t}))=\sum_{k_1 \neq k_2}\left(\mathcal{F}_{n_{\mathrm{ph}}+k_1}(\boldsymbol{\epsilon}(t))-\mathcal{F}_{n_{\mathrm{ph}}+k_2}(\boldsymbol{\epsilon}(t))\right)^2
-        \end{equation*}
-        I think it's making the cost function symmetrical w.r.t. $n_{ph}$.
-    \item A more recently developed, and more direct, method is to add a penalty term for any occupation of the final photon state ($\ket{n_{ph} - 1}$) in the truncated Hilbert space at any time:
-        \begin{equation*}
-            g_{\text {trajectory }}=\sum_{k=1}^N\left|\left\langle n_{\text {ph }}-1 \mid \psi_{\text {fwd }}^{(k)}\right\rangle\right|^2
-        \end{equation*}
-\end{itemize}
-
-\subsection{Troubleshooting optimization convergence}
-Check list: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Troubleshooting Optimization Algorithm}
+Here I provide a check list for Troubleshooting the optimization algorithm that I have accumulated during my project. 
+However, this list is nonexhaustive and Reinhold provides his version in chapter 4.6, \cite{reinhold2019}.
 \begin{enumerate}
-    \item Check that the time given $T = N \delta t$ is appropriate.
-        \begin{itemize}
-            \item Specified in units that are consistent with the units specifying the Hamiltonian. For instance, if the Hamiltonian is specified in GHz, then the time step should be in units of ns.
-            \item N value appropriate
-        \end{itemize}
-    \item check constraints
-        \begin{itemize}
-            \item Completely remove all constraints and penalties, and make sure that the algorithm works in this context before re-introducing them
-        \end{itemize}
-    \item check algorithm 
-        \begin{itemize}
-            \item check termination conditions \\
-            Gradient based search algorithms usually have termination conditions specified in terms of the norm of the gradient. It is often necessary to lower the gradient norm threshold for termination to ensure that it does not give up -> gtol in scipy.minimize
-
-        \end{itemize}
-    \item check ionitial guess
-        \begin{itemize}
-            \item Avoid special initial guesses, this depends on the algorithm. 
-                For gradient-based algo, make sure initial gradient is not vanishing.
-        \end{itemize}
-    \item miscellaneous checks
-        \begin{itemize}
-            \item Truncation of cavity-state Hilbert space large enough? 
-        \end{itemize}
+    \item Check optimization parameters: 
+        \begin{enumerate}
+            \item Check that the time given $T = N \delta t$ is appropriate.
+                $T$ should be specified in units that are consistent with the units specifying the Hamiltonian. For instance, if the Hamiltonian is specified in GHz, then the time step should be in units of ns.
+            \item Check that truncations are sufficiently large. N value appropriate
+        \end{enumerate}
+    \item check constraints: Completely remove all constraints and penalties, and make sure that the algorithm works in this context before re-introducing them
+    \item check termination conditions \\
+        Gradient based search algorithms usually have termination conditions specified in terms of the norm of the gradient. 
+        It is often necessary to lower the gradient norm threshold for termination to ensure that it does not give up. (gtol in scipy.minimize)
+    \item check initial guess: Avoid special initial guesses, this depends on the algorithm. 
+        For gradient-based algo, make sure initial gradient is not vanishing.
 \end{enumerate}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{My Codes}
+% include: 
+% - show what I did to generate the results in next chapter, use what packages and write what codes
+This project is entirely conducted in python. The main quantum control libray in python is QuTiP.
+This project uses QuTiP library functions for the quantum simulation and GRAPE, CRAB optimization.
+Another python library based on QuTip, Krotov is also used in chapter \ref{sec:vac2cat}.
+All codes mentioned in chapter \ref{sec:state_preparation} follow a similar structure of defining the Hamiltonian, initial and target states, optimization parameters and then running the optimization algorithm by feeding the above defined variables in into QuTip or Krotov optimization functions. 
+A python sample code can be seen in Appendix \ref{sec:sample_code}. Note that the codes in Github are in Jupyter Notebook format, which is more readable and easier for dynamic scientific programming.
+Main effort went into determining the appropriate system and optimization parameters values rather than coding these scripts. 
+Though with the above said, much effort was put into understanding QuTip source code and at some point correcting or modifying the source code to suit the needs of the project.
+For instance, much time was spent in trying to understand how QuTip implements the figure of merit for optimization and modify it to incorporate partial tracing out qubit into the fidelity function. 
+However, this did not work out as will be discussed in chapter \ref{sec:further_discussions}.
+All the codes mentionded in are available in the GitHub repository \cite{lzl_github_repo}.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{State preparation pulse optimization}
-All codes mentioned in this section are available in the GitHub repository \cite{lzl_github_repo}.
+\chapter{State preparation pulse optimization}\label{sec:state_preparation}
+Here is a summary of optimization results (shown previously in overview chapter): 
+
+\begin{sidewaystable}
+    \begin{tabularx}{\textheight}{|p{4cm}|X|X|X|X|X|X|X|p{3.5cm}|}
+    \hline
+    name                               & \begin{tabular}[c]{@{}l@{}}physical\\ system\end{tabular}             & \begin{tabular}[c]{@{}l@{}}initial\\ state\end{tabular} & \begin{tabular}[c]{@{}l@{}}target\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}ops\\ algo\end{tabular} & N     & \begin{tabular}[c]{@{}l@{}}\# of \\ time \\ steps\end{tabular} & \begin{tabular}[c]{@{}l@{}}pulse\\ length\end{tabular} & \begin{tabular}[c]{@{}l@{}}final\\ fidelity\\ (simulation)\end{tabular} \\ \hline
+    single\_qubit                      & \begin{tabular}[c]{@{}l@{}}single\\ qubit\end{tabular}                & \begin{tabular}[c]{@{}l@{}}ground\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}excited\\ state\end{tabular} & GRAPE                                              & NIL & 1000                                                           & 18                                                     & 0.9999367235643194                                                      \\ \hline
+    vac2coherent                       & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i1}$                                             & $\psi_{f1}$                                             & GRAPE                                              & 5     & 100                                                            & 1                                                      & 0.99998235969216                                                        \\ \hline
+    unselective\_spin\_flip            & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i2}$                                                        & $\psi_{f2}$                                                       & GRAPE                                              & 16    & 500                                                            & 1                                                      & 0.9995869703894827                                                      \\ \hline
+    selective\_spin\_flip              & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i3}$                                                        & $\psi_{f3}$                                                       & GRAPE                                              & 16    & 100000                                                         & 500                                                    & 0.9994876128337873                                                      \\ \hline
+    \begin{tabular}[c]{@{}l@{}}selective\_spin\_flip\\ \_constraints\end{tabular} & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i3}$             & $\psi_{f3}$                                                        & GRAPE                                              & 16    & 100000                                                         & 500                                                    & 0.9992259750482354                                                      \\ \hline
+    vac2cat                            & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i4}$                                                        & $\psi_{f4}$                                                        & GRAPE                                              & 16    & 100000                                                         & 5000                                                   & 0.9529111010142354                                                                        \\ \hline
+    vac2cat                            & \begin{tabular}[c]{@{}l@{}}cavity\\ coupled to\\ a qubit\end{tabular} & $\psi_{i4}$                                                        & $\psi_{f4}$                                                        & KROTOV                                              & 16    & 100000                                                         & 5000                                                   & 0.9995017174335629                                                                       \\ \hline
+    \end{tabularx}
+\end{sidewaystable}
+
+where, initial and target states are given by: 
+\begin{align*}
+    % vac2coherent
+    \text{vac2coherent} \\
+    \psi_{i1} &= \ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+    \psi_{f1} &= \ket{\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+    % unselective
+    \text{unselective} \\
+    \psi_{i2} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}})\\
+    \psi_{f2} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{1}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{1}_{\text{qubit}})\\
+    % selective
+    \text{selective} \\
+    \psi_{i3} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}})\\
+    \psi_{f3} &= \frac{1}{\sqrt{2}} (\ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{1}_{\text{cavity}} \otimes \ket{1}_{\text{qubit}})\\
+    % vac2cat
+    \text{vac2cat} \\
+    \psi_{i1} &= \ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+    \psi_{f1} &= \ket{\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{-\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+\end{align*}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Starting with a simple diagnostic pulse, single qubit system}
 To verify that I have a working code that can optimize a pulse, 
 I will start with a simple qubit flip operation of a single-qubit system.
-The purpose of this section is to show that the algorigm is indeed running optimization
+The purpose of this chapter is to show that the algorigm is indeed running optimization
 by recovering analytically solvable state-to-state transer using pulse optimization. 
 \\
 In the following example, we consider using the CRAB algorithm as implemented in the 
@@ -575,7 +636,7 @@ $$
 \cos \theta=\frac{\omega_0-\omega}{\Omega}
 $$
 
-Suppose we want to achieve a state-to-state transfer from $\ket{+\hat{z}}$ to $\ket{-\hat{z}}$,  
+Suppose we want to achieve a state-to-state preparation from $\ket{+\hat{z}}$ to $\ket{-\hat{z}}$,  
 $$
 P_{+\hat{z} \rightarrow-\hat{z}}(t) = \sin ^2 \theta \sin ^2(\Omega t / 2)=\left(\frac{\omega_1}{\Omega}\right)^2 \sin ^2(\Omega t / 2)
 $$
@@ -584,21 +645,25 @@ With $H_1(t)$, $P_{+\hat{z} \rightarrow-\hat{z}}(t)$ only goes to 1 if
     \item $\omega_1 = \Omega$, i.e. $\omega = \omega_0$.
     \item $\omega_1 = \frac{\pi}{T}$ (with evolution time T fixed, smallest frequency needed)
 \end{enumerate}
-\\
-Now we run the pulse optimization and compare with analytical result. 
+Now we run the pulse optimization and compare with analytical result.
 \\
 Let t = evo\_time = T
 \\
 Defining the time evolution parameters:
 - To solve the evolution the control amplitudes are considered constant within piecewise timeslots, hence the evolution during the timeslot can be calculated using U(t\_k) = expm(-iH(t\_k)dt). 
 - Combining these for all the timeslots gives the approximation to the evolution from an initial state ψ0 at t=0 to U(T)ψ0 at the t=evo\_time. The number of timeslots and evo\_time have to be chosen such that the timeslot durations (dt) are small compared with the dynamics of the system.
-- set drift frequency $\omega_0$ to some number, at resonance $\omega = \omega_0$, for state to state transfer to happen at the end of pulse, require $\omega_1 = \frac{\pi}{T}$.
+- set drift frequency $\omega_0$ to some number, at resonance $\omega = \omega_0$, for state to state preparation to happen at the end of pulse, require $\omega_1 = \frac{\pi}{T}$.
 \\
 Next, we set the initial guess pulses where the pulse optimization algorithm starts. 
 During the each iteration of the optimization, the Nelder-Mead algorithm calculates a new set of coefficients that improves the currently worst set among all set of coefficients. For details see [1,2] and a textbook about static search methods. 
 The algorithm continues until one of the termination conditions defined above has been reached. If undesired results are achieved, rerun the algorithm and/or try to change the number of coefficients to be optimized for, as this is a very crucial parameter.  
 
 % TODO: add here the results from GRAPE and CRAB, and discuss their issues with the intended goal\
+The optimization parameters are: 
+\begin{enumerate}
+    \item 
+\end{enumerate}
+
 The optimized pulses are: 
 \begin{figure}[H]
     \centering
@@ -629,7 +694,7 @@ Having tested the code on a single qubit system, we now move on to a more comple
 In this code, we consider a cavity coupled to a single qubit.
 %TODO:
 % - revise Reinhold thesis
-% - vet the following section with chiyuan, 几个哈密度量的物理意义 + 他们之间的转换  
+% - vet the following chapter with chiyuan, 几个哈密度量的物理意义 + 他们之间的转换  
 % - discuss that we are just looking at area under curve here, code to calcualte area under curve
 For this physical system, we have drift Hamiltonian, 
 from Reinhold PhD thesis (2.13) \cite{reinhold2019}: 
@@ -834,7 +899,7 @@ Simulation gives:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Diagnostic pulse: selective spin flip, cavity coupled with single qubit(effective)}
 
-For this scenario, the drift and contorl Hamiltonian terms are same as in the previous section. We are interested in this state 
+For this scenario, the drift and contorl Hamiltonian terms are same as in the previous chapter. We are interested in this state 
 preparation because as achieved by Krastanov et al.(2015) \cite{Krastanov2015} which gave a contruction for how to achieve arbitrary 
 operation on dispersively coupled cQED systems using a set of two opeartions: displacements and selective number-dependent arbitrary phase (SNAP) operations. 
 SNAP operations allow an arbitrary set of relative phases to be applied to different photon number states, and can be represented with the form
@@ -863,7 +928,7 @@ State preparation optimization target is as follow:
 \\
 
 The best optimization result that was obtained by tuning the optimization script from 
-previous section is as follow. 
+previous chapter is as follow. 
 \\
 The final optimization algorithm parameters are:
 \\ 
@@ -902,7 +967,7 @@ Zooming into control 1 pulse amplitudes, as shown in fig \ref{fig:selective_spin
 we see that the pulse is fairly smooth. However, this fast oscillation is still not desirable and preferably gotten rid of. 
 Another reason that might have contributed to this fast oscillation is the background frequency of the cavity and qubit 
 of which the control pulses are trying to cancel out. One way to partially deal with this fast oscillation issue is to work
-with the Hamiltonian in the rotating frame which will be tried out in the next section when cavity vacuum state to cavity cat state
+with the Hamiltonian in the rotating frame which will be tried out in the next chapter when cavity vacuum state to cavity cat state
 is being optimized.  
 
 Forward simulation is given below to ensure that pulse optimization has run properly. 
@@ -981,8 +1046,17 @@ However, none gave optimization results where fidelity, pulse amplitude, pulse s
 are all accounted for satisfactorily. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{vacuum to cat state, cavity coupled with single qubit(effective)}
-In this section, we finally get to do a state preparation optimization of cavity vacuum state to cavity cat state.
+\subsection{vacuum to cat state, cavity coupled with single qubit(effective)}\label{sec:vac2cat}
+In this chapter, we finally get to do a state preparation optimization of cavity vacuum state to cavity cat state.
+The drift and control Hamiltonian terms are same as in the previous chapter.
+
+The initial and target states for this pulse optimization code are:
+\begin{align}
+    \psi_{\text{initial}} &= \ket{0}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+    \psi_{\text{target}} &= \ket{\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} 
+                + \ket{-\alpha}_{\text{cavity}} \otimes \ket{0}_{\text{qubit}} \\
+\end{align}
+
 The most efficient way to do this is to optimize for the cavity state alone by tracing out the qubit state when calculating state fidelity. 
 However, the QuTip package does not support this feature. I attemped to modify QuTip source code to allow for this feature but failed. 
 One might naively think that QuTip calculates state fidelity at the end of each optimization iteration. 
@@ -1114,127 +1188,72 @@ Simulation gives:
     \label{fig:vac2cat_simulation}
 \end{figure}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Further discussions reagarding numerical pulse optimzation}
-\begin{enumerate}
-    \item choosing time parameters: 
-        \begin{itemize}
-            \item evolution time (evo\_time): pulse length needed can be estimated %TODO: ask chiyuan how is this calculated
-            \item number of time slices (n\_ts): n\_ts that is too small will lead to large error; 
-                n\_ts that is too large will result in long computation time; 
-                hence an appropriate n\_ts value needs to be tested via trial and error.
-        \end{itemize}
-\end{enumerate}
+\subsection{Further discussions}\label{sec:further_discussions}
+There are a few points to be made regrading choosing the time parameters for optimization, evolution time (evo\_time) and number of time slices (n\_ts).
+Evolution time (evo\_time), or equivalently the pulse length, can be estimated %TODO: ask chiyuan how is this calculated
+Number of time slices (n\_ts) that is too small will lead to large error. 
+n\_ts that is too large will result in long computation time; and also lead to fast oscillations in optimized pulses when optimization is using GRAPE.
+Hence an appropriate n\_ts value needs to be tested via trial and error.
+\\
+It is unfortunate that there was not enough time to reach the initial goal of the project due to programming issues regrading QuTip and some other unexpected complications.
+Firstly, it is understood that optimization should have been run with the fidelity of the cavity state alone, i.e. partial tracing out the qubit state when calculating fidelity. 
+However, implementation of QuTip doesn't make this task easily achievable. QuTip doesn't calculate the fidelity of the current final state evolved from the current optimized pulse for each optimization iteration. 
+Instead, it has a caching system that tries to minimize redundant calculations as the forward simulation process is very computation intensive due to the many matrix multiplications involved (which is proportional to number of time slices and the cavity state space truncation $N$).
+As such, to implement partial trace fidelity for optimization using QuTip, one effectively needs to rewrite the bulk of the optimization code up to calling scipy optimization function. 
+Attempt was made in this direction but was given up half way due to project time constraint. 
+Besides, it was latered discovered that the Krotov package, a package based on top of QuTip, implements the optimziation process different from QuTip in such a was that allows for customization of fidelity. 
+See How-to chapter, "How to define a new optimization functional" in Krotov documentation for details. \cite{GoerzSPP2019}
+However, this was not attempted due to time constraint.
+\\
+Secondly, the project did not yet get to consider all physical constraints on the control pulses as discussed in chapter \ref{sec:pulse_constraints}.
+The only constraint that was considered was the pulse amplitude constraint. To incorporate more physical constraints into pulse optimization, CRAB algorithm 
+could be used which allows for the incorporation of physical constraints into the optimization process. Moreover, CRAB optimizes for functional basis coefficients 
+rather than time-slice amplitudes of control pulses. This allos for arbitrary smoothness of the physical control pulses.
+However, running CRAB requires more trial and error with choosing optimzation time parameters and functional basis parameters. 
+From experience, GRAPE behaves much robustly in the QuTip implementation. One idea is to first run CRAB, aiming for a $~90\%$ fidelity and pass this optimized pulse into GRAPE for further optimizaiton. 
+This is because CRAB usually runs faster than GRAPE, with only a small number of coefficients to be optimized. However, CRAB also has a smaller optimization landscap, making GRAPE a better choice for finer fidelity optimization. 
+\\
+Thirdly, one issue that was realised at the end was that the native oscillation frequency of the cavity seems to be causing the fast oscillations in the optimized pulses as seen in Fig \ref{fig:vac2cat_krotov}.
+One idea was to transform the Hamiltonian to the rotating frame at the native oscillation frequency of the cavity to alleviate this issue. 
+However, going to the rotating frame tags a rotating phase factor to the annihilation and creation operators of the cavity. 
+As QuTip and Krotov only optimizes for real control pulses, so far in the control Hamiltonians that I used, control signal on the cavity has been separated into real and imaginary parts. 
+With different rotating phase factors taged to the annihilation and creation operators of the cavity, the real and imaginary parts of the control pulses cannot be separated any more. 
+This issue was not further looked into due to time constraint. 
+\\
+With more time, all three above stated problems should be solvable. All three problems come from technical programming issues. 
+With these settled, the next step would be to use the final optimized control pulses to simulate the evolution of the original full Hamiltonian and compare the state fidelity. 
+This is to check whether the optimized pulses violate the constraints for the effective Hamiltonian to be valid. 
+Although the above three issues were not settled, this task of checking with the full Hamiltonian was still attempted. (the same code as the Krotov code)
+However, the computation couldn't be completed in any reasonable amount of time. 
+One idea is to make use of packages such as TensorFlow and CuPy to speed up matrix multiplications by through GPU acceleration.
+This idea was attempted but also dropped half way due to time constraints. 
+Besides, this idea didn't seem promising as it seemed that even with GPU acceleration, the computation time would still be unreasonable. 
+If this task is completed and a fidelity generated. A good fidelity will signify that the control pulse is within the valid limits of the effective Hamiltonian. 
+If the fidelity is not good, more constraints need to be added during pulse optimization. 
+\\
+Beyond state preparation for a close quantum system, the next step would be to consdier state preparation in an open and noisy system. 
+Apart from switching from the Schrödinger equation to the Lindblad master equation or Liouville-von Neumann equation, this is a very similar optimization process. 
+\\
+Beoyond state preparations in close or open systems, a related next task would be to do control pulse optimizations for unitary gates, often called gate design.
+Both single-mode and multi-mode gates can be potential targets. Though many of the optimization lessons learned and implemented in this project can be re-used for such a purpose, this project did not have the time to reach this point. 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Future work}\label{sec:future_work}
-\begin{itemize}
-    \item Try the last code in rotating frame to alleviate fast oscillations in optimized pulses
-    \item fudelity partial trace over cavity state
-    \item compare with fidelity when using original full Hamiltonian 
-    \item gate design 
-    \item consdier noise
-\end{itemize}
-
-\section{Conclusion}
-To be filled.
+\chapter{Conclusion}
+In conclusion, this report explored quantum optimal control for state preparation in a cavity-coupled double quantum dot system. 
+Pulse optimization was successfully performed using the effective Hamiltonian to achieve high fidelity state transfers, demonstrating the potential of numerical methods for designing control protocols. 
+However, challenges arose when applying the optimized pulses to the full physical Hamiltonian, indicating the need for further refinement of the optimization process and the inclusion of additional physical constraints. 
+Future work should focus on improving computational efficiency, incorporating open quantum system dynamics, and extending the techniques to gate design for quantum computing applications.
 
 \appendix
-\section{EXACT DIAGONALIZATION OF THE DOUBLE-QUANTUM-DOT HAMILTONIAN}
-The DQD Hamiltonian, Eq. \ref{eq:DQD_Hamiltonian}, may be diagonalized exactly in three steps. 
-First, we write Eq. \ref{eq:DQD_Hamiltonian} in the eigenbasis of the molecular Hamiltonian. This is done with the transformation
-$$
-U_0=\exp \left[-i \frac{(\pi / 2-\theta)}{2} \widetilde{\tau}_y\right]
-$$
-The transformed Hamiltonian takes the form
-$$
-\begin{aligned}
-U_0^{\dagger} H_d U_0= & \frac{\Omega}{2} \widetilde{\tau}_z+\frac{B_z}{2} \widetilde{\sigma}_z+\frac{b_x \sin \theta}{2} \widetilde{\tau}_z \widetilde{\sigma}_x \\
-& -\frac{b_x \cos \theta}{2} \widetilde{\tau}_x \widetilde{\sigma}_x .
-\end{aligned}
-$$
-
-Second, the spin basis is rotated to match the direction of the total magnetic field $\mathbf{B}=\left(b_x \sin \theta, 0, B_z\right)$. This is achieved through the unitary transformation
-\begin{equation}
-    U_1=\exp \left(-i \frac{\Phi}{2} \widetilde{\tau}_z \widetilde{\sigma}_y\right) .    
-\end{equation}
-
-
-Here $\Phi$ is the angle between the magnetic field and the $z$ axis, satisfying $\tan \Phi=b_x \sin \theta / B_z$. In the doubly transformed basis, the DQD Hamiltonian takes the form
-\begin{equation}\label{eq:A4}
-    \begin{aligned}
-        & U_1^{\dagger} U_0^{\dagger} H_d U_0 U_1 \\
-        & \quad=\frac{\Omega}{2} \widetilde{\tau}_z+\frac{B_z \sec \Phi}{2} \widetilde{\sigma}_z-\frac{b_x \cos \theta}{2} \widetilde{\tau}_x \widetilde{\sigma}_x .
-    \end{aligned}
-\end{equation}
-
-The Hamiltonian of Eq. \ref{eq:A4} preserves the parity quantum number $\tilde{\tau}_z \tilde{\sigma}_z$. Thus, it may be diagonalized separately for each parity. The corresponding unitary transformation is
-$$
-\begin{aligned}
-& U_2=U_{2+}+U_{2-}, \\
-& U_{2+}=\cos \frac{\phi_{+}}{2} P_{+}-\sin \frac{\phi_{+}}{2}\left(\tilde{\tau}_{-} \tilde{\sigma}_{-}-\tilde{\tau}_{+} \tilde{\sigma}_{+}\right), \\
-& U_{2-}=\cos \frac{\phi_{-}}{2} P_{-}-\sin \frac{\phi_{-}}{2}\left(\tilde{\tau}_{-} \tilde{\sigma}_{+}-\tilde{\tau}_{+} \tilde{\sigma}_{-}\right),
-\end{aligned}
-$$
-where $P_{ \pm}=\left(1 \pm \tilde{\tau}_z \widetilde{\sigma}_z\right) / 2$ are the projectors on the subspaces of parity $\pm$, respectively. The effective spin-orbit mixing angles are determined by
-$$
-\tan \phi_{ \pm}=\frac{b_x \cos \theta}{\Omega \pm B_z \sec \Phi} .
-$$
-
-Defining the total unitary transformation $U=U_0 U_1 U_2$, the DQD Hamiltonian becomes
-\begin{equation}\label{eq:A7}
-    U^{\dagger} H_d U=\frac{E_m}{2} \widetilde{\tau}_z+\frac{E_s}{2} \widetilde{\sigma}_z,
-\end{equation}
-
-where the molecular and spin Larmour frequencies in the dressed basis are
-\begin{equation}\label{eq:A8}
-    \begin{aligned}
-        E_m & =\frac{b_x \cos \theta}{2}\left(\csc \phi_{+}+\csc \phi_{-}\right), \\
-        E_s & =\frac{b_x \cos \theta}{2}\left(\csc \phi_{+}-\csc \phi_{-}\right) .
-        \end{aligned}
-\end{equation}
-
-To indicate the final DQD eigenbasis, the explicit unitary transformation as well as the " ," are dropped. Equation \ref{eq:A7} then becomes Equation \ref{eq:DQD_Hamiltonian_in_eigenbasis}.
-
-The resonator couples to the $\underset{\sim}{\mathrm{DQD}}$ via the dimensionless position operator $\zeta=|\widetilde{R}\rangle\langle\widetilde{R}|-| \widetilde{L}\rangle\langle\widetilde{L}|$. 
-The unitary transformation of Eq. \ref{eq:A7} may be used to express $\zeta$ in the DQD eigenbasis as
-$$
-\zeta=\sum_{i, j} \zeta^{(i j)} \tau_i \sigma_j
-$$
-
-Here the Pauli matrices are labeled with indices $\{0, x, y, z\}$, where 0 signifies the identity matrix. The nonzero coefficients
-$\zeta^{(i j)}$ are found to be
-\begin{equation}\label{eq:A10}
-    \begin{aligned}
-        \zeta^{(x 0)}= & -\cos \theta \cos \Phi \cos \bar{\phi}, \\
-        \zeta^{(z x)}= & \cos \theta \cos \Phi \sin \bar{\phi}, \\
-        \zeta^{(x x)}= & \sin \theta \sin \bar{\phi} \cos \frac{\Delta \phi}{2} \\
-        & +\cos \theta \sin \Phi \sin \bar{\phi} \sin \frac{\Delta \phi}{2}, \\
-        \zeta^{(y y)}= & -\sin \theta \cos \bar{\phi} \sin \frac{\Delta \phi}{2} \\
-        & +\cos \theta \sin \Phi \cos \bar{\phi} \cos \frac{\Delta \phi}{2}, \\
-        \zeta^{(z 0)}= & \sin \theta \cos \bar{\phi} \cos \frac{\Delta \phi}{2} \\
-        & +\cos \theta \sin \Phi \cos \bar{\phi} \sin \frac{\Delta \phi}{2}, \\
-        \zeta^{(0 z)}= & -\sin \theta \sin \bar{\phi} \sin \frac{\Delta \phi}{2} \\
-        & +\cos \theta \sin \Phi \sin \bar{\phi} \cos \frac{\Delta \phi}{2} .
-        \end{aligned}
-\end{equation}
-
-
-In Eq. \ref{eq:A10}, we have introduced the average spin-orbit mixing angle $\bar{\phi}=\left(\phi_{+}+\phi_{-}\right) / 2$ and the difference angle $\Delta \phi=$ $\phi_{+}-\phi_{-}$. 
-Expressions for the DQD-resonator couplings appearing in Eq. \ref{eq:DQD_resonator_interaction_new_basis} are directly obtained from the $\zeta^{(i j)}$ :
-\begin{equation}\label{eq:A11}
-    \begin{aligned}
-        g_m & =-g_c \zeta^{(x 0)}, & & g_s=g_c \zeta^{(z x)}, \\
-        g_{+} & =g_c\left[\zeta^{(x x)}-\zeta^{(y y)}\right], & g_{-} & =g_c\left[\zeta^{(x x)}+\zeta^{(y y)}\right], \\
-        g_{m p} & =g_c \zeta^{(z 0)}, & & g_{s p}=g_c \zeta^{(0 z)} .
-        \end{aligned}
-\end{equation}
-In the limit of small field gradient discussed in Sec. II B, Eqs. \ref{eq:A8} and \ref{eq:A11} yield Eqs. \ref{eq:Larmour_frequencies} and \ref{eq:couplings}, respectively. 
-Moreover, note that the matrix element of the dimensionless position operator $\zeta$ between the two spin-qubit states is proportional to $g_s / g_c$. 
-This means that spin transitions arising from the coupling of electric fields to the electric dipole occur at a rate proportional to $\left(g_s / g_c\right)^2$. 
-Finally, we remark that exact expressions for the transformed spin operators may also be obtained.
+\chapter{Sample Code} \label{sec:sample_code}
+\lstinputlisting[
+    language=Python, 
+    linewidth=0.9\textwidth, 
+    basicstyle=\small\ttfamily, 
+    breaklines=true, 
+    breakatwhitespace=true, 
+    caption = selective spin flip optimization code, 
+    label=code:elective_spin_flip]{elective_spin_flip.py}
 
 \printbibliography
 \end{document}
