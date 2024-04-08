@@ -172,7 +172,7 @@ We employ various optimization algorithms, such as GRAPE (GRadient Ascent Pulse 
 \par
 Here is a summary of optimization results: 
 \begin{sidewaystable}
-    \begin{tabularx}{\textheight}{|p{4cm}|p{2.5cm}|X|X|p{2.5cm}|X|X|X|p{3.5cm}|}
+    \begin{tabularx}{\textheight}{|p{4cm}|p{2cm}|X|X|p{2cm}|X|X|X|p{3.5cm}|}
     \hline
     name                               & \begin{tabular}[c]{@{}l@{}}physical\\ system\end{tabular}             & \begin{tabular}[c]{@{}l@{}}initial\\ state\end{tabular} & \begin{tabular}[c]{@{}l@{}}target\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}ops\\ algo\end{tabular} & N     & \begin{tabular}[c]{@{}l@{}}\# of \\ time \\ steps\end{tabular} & \begin{tabular}[c]{@{}l@{}}pulse\\ length\end{tabular} & \begin{tabular}[c]{@{}l@{}}final\\ fidelity\\ (simulation)\end{tabular} \\ \hline
     single\_qubit                      & \begin{tabular}[c]{@{}l@{}}single\\ qubit\end{tabular}                & \begin{tabular}[c]{@{}l@{}}ground\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}excited\\ state\end{tabular} & GRAPE                                              & NIL & 1000                                                           & 18                                                     & 0.9999367235643194                                                      \\ \hline
@@ -551,7 +551,7 @@ All the codes mentionded in are available in the GitHub repository \cite{lzl_git
 Here is a summary of optimization results (shown previously in overview chapter): 
 
 \begin{sidewaystable}
-    \begin{tabularx}{\textheight}{|p{4cm}|p{2.5cm}|X|X|p{2.5cm}|X|X|X|p{3.5cm}|}
+    \begin{tabularx}{\textheight}{|p{4cm}|p{2cm}|X|X|p{2cm}|X|X|X|p{3.5cm}|}
     \hline
     name                               & \begin{tabular}[c]{@{}l@{}}physical\\ system\end{tabular}             & \begin{tabular}[c]{@{}l@{}}initial\\ state\end{tabular} & \begin{tabular}[c]{@{}l@{}}target\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}ops\\ algo\end{tabular} & N     & \begin{tabular}[c]{@{}l@{}}\# of \\ time \\ steps\end{tabular} & \begin{tabular}[c]{@{}l@{}}pulse\\ length\end{tabular} & \begin{tabular}[c]{@{}l@{}}final\\ fidelity\\ (simulation)\end{tabular} \\ \hline
     single\_qubit                      & \begin{tabular}[c]{@{}l@{}}single\\ qubit\end{tabular}                & \begin{tabular}[c]{@{}l@{}}ground\\ state\end{tabular}  & \begin{tabular}[c]{@{}l@{}}excited\\ state\end{tabular} & GRAPE                                              & NIL & 1000                                                           & 18                                                     & 0.9999367235643194                                                      \\ \hline
@@ -652,7 +652,7 @@ The optimization parameters are:
     \item Number of time slots, n\_ts = 1000
     \item Time allowed for the evolution, evo\_time = 18
     \item Fidelity error target, fid\_err\_targ = 1e-6
-    \item Maximum iterations for the optisation algorithm, max\_iter = 10000
+    \item Maximum iterations for the optimization algorithm, max\_iter = 10000
     \item Maximum (elapsed) time allowed in seconds, max\_wall\_time = 120
     \item initial pulse, p\_type = 'SINE'
 \end{enumerate}
@@ -953,9 +953,15 @@ The inital and optimized pulses are:
     \caption{selective spin flip control 3 pulse amplitudes}
     \label{fig:selective_spin_flip_control3}
 \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{selective_spin_flip_GRAPE_control1_zoomin.png}
+    \caption{selective spin flip control 1 pulse amplitudes zoom in}
+    \label{fig:selective_spin_flip_GRAPE_control1_zoomin}
+\end{figure}
 
 The control pulses have very fast oscillations due to the large number of time slices.
-Zooming into control 1 pulse amplitudes, as shown in fig \ref{fig:selective_spin_flip_control3_zoomin},
+Zooming into control 1 pulse amplitudes, as shown in fig \ref{fig:selective_spin_flip_GRAPE_control1_zoomin},
 we see that the pulse is fairly smooth. However, this fast oscillation is still not desirable and preferably gotten rid of. 
 Another reason that might have contributed to this fast oscillation is the background frequency of the cavity and qubit 
 of which the control pulses are trying to cancel out. One way to partially deal with this fast oscillation issue is to work
