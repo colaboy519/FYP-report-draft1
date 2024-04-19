@@ -233,131 +233,38 @@ With more time, these technical programming issues could be resolved.
 % - Optimal dispersive readout of a spin qubit with a microwave resonator
 
 %%%%%% 草稿 %%%%%%%%
-% First to reiterate briefly on why we are interested in a cavity-DQD system. Strong coupling of semiconductor spin qubits to superconducting microwave resonators was recently demonstrated. \cite{Mi2018}\cite{Landig2018}
-% These breakthroughs can potentially combine the long coherence times of solid-state spin qubits with the long-distance connectivity, fast control, and fast high-fidelity quantum-non-demolition readout of existing superconducting qubit implementations.\cite{D_Anjou_2019}
-% Although this project doesn't reach the part of readout, but only considers state preparation in this physical system. This serves as a motivation. 
-% The chapter below is adapted from \cite{D_Anjou_2019} and \cite{reinhold2019} as they explain the physical system and Hamiltonians very well. 
-% This project focuses much more on optimization than on the physical systems themselves.
-% \par
-% We consider a DQD defined by a double-well potential $V(z)$ whose wells are separated by a distance $2d$, as depicted in Fig \ref{fig:DQD}.
-% The two lowest-energy orbitals of the right and left wells are labelled $|\widetilde{R}\rangle$ and $|\widetilde{L}\rangle$, respectively, with corresponding energies $\epsilon_R$ and $\epsilon_L$.
-% The energy detuning between the right and left orbitals is $\epsilon=\epsilon_R-\epsilon_L$, and the tunnel coupling between them is $t_c>0$. 
-% Moreover, a uniform longitudinal magnetic field is applied along the axis of the quantum dot (the $z$ axis). This induces a Zeeman energy splitting $\hbar \gamma_e B_z$ of the electronic spin states $|\widetilde{\uparrow}\rangle$ and $|\widetilde{\downarrow}\rangle$, where $\gamma_e$ is the electron gyromagnetic ratio. 
-% In addition, a transverse position-dependent magnetic field $B_x(z)$ is applied along the $x$ axis using, e.g., a proximal micromagnet. As the electron moves across the DQD, it therefore experiences a magnetic field variation of order $b_x=\partial_z B_x(z) \times d$. This hybridizes the spin and charge degrees of freedom, enabling electrical control and readout of the spin. 
-% In the following, we set $\hbar=1$ and $\gamma_e=1$. The resulting DQD Hamiltonian is
-% \begin{equation}\label{eq:DQD_Hamiltonian}
-%     \begin{aligned} 
-%         & H_d=H_m+H_Z, \\
-%         & H_m=\frac{\epsilon}{2} \widetilde{\tau}_z+t_c \widetilde{\tau}_x, \\
-%         & H_Z=\frac{B_z}{2} \widetilde{\sigma}_z+\frac{b_x}{2} \widetilde{\tau}_z \widetilde{\sigma}_x .
-%     \end{aligned}    
-% \end{equation}
+First to reiterate briefly on why we are interested in a cavity-DQD system. Strong coupling of semiconductor spin qubits to superconducting microwave resonators was recently demonstrated. \cite{Mi2018}\cite{Landig2018}
+These breakthroughs can potentially combine the long coherence times of solid-state spin qubits with the long-distance connectivity, fast control, and fast high-fidelity quantum-non-demolition readout of existing superconducting qubit implementations.\cite{D_Anjou_2019}
+Although this project doesn't reach the part of readout, but only considers state preparation in this physical system. This serves as a motivation. 
+The chapter below is adapted from \cite{D_Anjou_2019} and \cite{reinhold2019} as they explain the physical system and Hamiltonians very well. This project focuses much more on optimization than on the physical systems themselves.
+\par
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{DQD.png}
+    \caption{
+        Schematic representation of the double-well potential $V(z)$ forming the DQD. The detuning and tunnel coupling between the right dot orbital $|\widetilde{R}\rangle$ and left dot orbital $|\widetilde{L}\rangle$ are $\epsilon$ and $t_c$, respectively. The DQD is subject to a longitudinal magnetic field $B_z \hat{z}$ and an external transverse magnetic field gradient $\partial_z B_x(z) \hat{x}$ such that the field $B_x$ varies by $b_x=\partial_z B_x(z) \times d$ over the half interdot distance $d$.
+    }
+    \label{fig:DQD}
+\end{figure}
+We consider a DQD defined by a double-well potential $V(z)$ whose wells are separated by a distance $2d$, as depicted in Fig \ref{fig:DQD}.
+The two lowest-energy orbitals of the right and left wells are labelled $|\widetilde{R}\rangle$ and $|\widetilde{L}\rangle$, respectively, with corresponding energies $\epsilon_R$ and $\epsilon_L$.
+The energy detuning between the right and left orbitals is $\epsilon=\epsilon_R-\epsilon_L$, and the tunnel coupling between them is $t_c>0$. 
+Moreover, a uniform longitudinal magnetic field is applied along the axis of the quantum dot (the $z$ axis). This induces a Zeeman energy splitting $\hbar \gamma_e B_z$ of the electronic spin states $|\widetilde{\uparrow}\rangle$ and $|\widetilde{\downarrow}\rangle$, where $\gamma_e$ is the electron gyromagnetic ratio. 
+In addition, a transverse position-dependent magnetic field $B_x(z)$ is applied along the $x$ axis using, e.g., a proximal micromagnet. As the electron moves across the DQD, it therefore experiences a magnetic field variation of order $b_x=\partial_z B_x(z) \times d$. This hybridizes the spin and charge degrees of freedom, enabling electrical control and readout of the spin. 
+In the following, we set $\hbar=1$ and $\gamma_e=1$. The resulting DQD Hamiltonian is
 
-% In Eq. \ref{eq:DQD_Hamiltonian}, $H_m$ is the molecular Hamiltonian of the DQD and $H_Z$ is the Zeeman Hamiltonian. Moreover, the $\widetilde{\tau}_i$ are the Pauli matrices in the $\{|\widetilde{R}\rangle,|\widetilde{L}\rangle\}$ basis and the $\widetilde{\sigma}_i$ are the Pauli matrices in the $\{|\widetilde{\uparrow}\rangle,|\widetilde{\downarrow}\rangle\}$ basis. 
-% It is also convenient to introduce the eigenstates $|\widetilde{ \pm}\rangle$ of the molecular Hamiltonian $H_m$. They satisfy $H_m|\widetilde{\Psi}\rangle= \pm \frac{\Omega}{2}|\widetilde{\Psi}\rangle$, where $\Omega=\sqrt{\left(2 t_c\right)^2+\epsilon^2}=2 t_c \sec \theta$ is the molecular energy gap and where $\theta=\arctan \left(\epsilon / 2 t_c\right)$ is the molecular mixing angle. 
-% Note that the description of electronic motion in terms of the two lowest-energy orbitals is only valid in the limit where $\Omega$ is much smaller than the single-dot orbital splitting, whether it originates from confinement or from valley splitting.
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.5\linewidth]{DQD.png}
-%     \caption{
-%         (a) Schematic representation of the double-well potential $V(z)$ forming the DQD. The detuning and tunnel coupling between the right dot orbital $|\widetilde{R}\rangle$ and left dot orbital $|\widetilde{L}\rangle$ are $\epsilon$ and $t_c$, respectively. The DQD is subject to a longitudinal magnetic field $B_z \hat{z}$ and an external transverse magnetic field gradient $\partial_z B_x(z) \hat{x}$ such that the field $B_x$ varies by $b_x=\partial_z B_x(z) \times d$ over the half interdot distance $d$. (b) Setup for the dispersive readout of a DQD embedded in a two-port microwave resonator with resonance frequency $\omega_r$. The DQD and the resonator electric field (green arrows) interact via the electric dipole coupling $g_c$. The resonator can be driven in the $i$ th port by an input field $b_i^{\text {in }}(t)$. The output fields $b_i^{\text {out }}(t)$ then carry information on the state of the DQD. The leakage rates of ports 1 and 2 to their respective feedlines are $\kappa_1$ and $\kappa_2$.\cite{D_Anjou_2019}
-%     }
-%     \label{fig:DQD}
-% \end{figure}
-
-% % Double-quantum-dot-resonator interaction
-% The electric field of the resonator couples directly to the electric dipole moment of the electron, as shown schematically in Fig. \ref{fig:DQD}(b). 
-% Due to the interaction of the spin and orbit degrees of freedom, the resonator photons can drive spin transitions. 
-% The Hamiltonian of the combined resonator and DQD system is
-% \begin{equation}\label{eq:DQD_resonator_Hamiltonian}
-%     \begin{aligned} 
-%         & H=H_d+H_r+V, \\
-%         & H_r=\omega_r a^{\dagger} a, \\    
-%     & V=g_c \tilde{\tau}_z\left(a+a^{\dagger}\right) .
-%     \end{aligned}
-% \end{equation}
-
-% In Eq. \ref{eq:DQD_resonator_Hamiltonian}, $H_r$ is the free Hamiltonian for a single mode of the resonator, $V$ is the dipole interaction Hamiltonian between the electron and the resonator, and $a$ annihilates a photon in the resonator. 
-% The resonance frequency of the resonator is $\omega_r>0$ and the strength of the dipole coupling is $g_c$.
-
-% % Double-quantum-dot eigenbasis and spin qubit
-% The DQD Hamiltonian, Eq. (1), can be diagonalized exactly as detailed in cite{D_Anjou_2019} Appendix A. Expressed in its eigenbasis, the Hamiltonian $H_d$ takes the form
-% \begin{equation}\label{eq:DQD_Hamiltonian_in_eigenbasis}
-%     H_d=\frac{E_m}{2} \tau_z+\frac{E_s}{2} \sigma_z,    
-% \end{equation}
-
-% where the $\tau_i$ and the $\sigma_i$ are now Pauli matrices in the eigenbasis $\left|\tau_z ; \sigma_z\right\rangle$ of $H_d$ dressed by the field gradient. 
-% Here $\tau_z= \pm$ labels the dressed "molecular-like" states and $\sigma_z=\uparrow(\downarrow)$ labels the dressed "spin-like" states [67]. 
-% Exact expressions for the molecular-like and spin-like Larmour frequencies $E_m$ and $E_s$ are derived in \cite{D_Anjou_2019} Appendix A. The energy-level diagram of the DQD is illustrated in Fig. 2, where we have also introduced the transition frequencies $E_{ \pm}=E_m \pm E_s$. 
-% In the following, we consider the spin qubit formed from the two dressed spin-like eigenstates spanning the molecular ground state. 
-% Specifically, we choose the computational basis $\{|1\rangle,|0\rangle\}=$ $\{|-; \uparrow\rangle,|-; \downarrow\rangle\}$. 
-% Despite their spin-like character, the electric dipole matrix element between these two states is finite and transitions between them can be induced electrically. 
-% In particular, the DQD-resonator interaction of Eq. (2) is written in the new basis as
-% \begin{equation}\label{eq:DQD_resonator_interaction_new_basis}
-%     \begin{aligned}
-%         V= & \mathcal{V}\left(a+a^{\dagger}\right), \\
-%         \mathcal{V}= & -g_m \tau_x+g_s \tau_z \sigma_x+g_{+}\left(\tau_{+} \sigma_{+}+\tau_{-} \sigma_{-}\right) \\
-%         & +g_{-}\left(\tau_{+} \sigma_{-}+\tau_{-} \sigma_{+}\right)+g_{m p} \tau_z+g_{s p} \sigma_z .
-%         \end{aligned}    
-% \end{equation}
-
-% Here $\left\{g_m, g_s, g_{+}, g_{-}\right\}$are the coupling strengths of the resonator to the DQD transitions of frequencies $\left\{E_m, E_s, E_{+}, E_{-}\right\}$ illustrated in Fig. 2. 
-% In addition, $g_{m p}$ and $g_{s p}$ are couplings arising from the finite dc electric polarizabilities of the molecular electric dipole and of the spin, respectively. 
-% Exact expressions for the $g_i$ are given in \cite{D_Anjou_2019} Appendix A.
-% \par
-% The above chapter has been mostly lifted from \cite{D_Anjou_2019} for a detailed explaination of the original full Hamiltonian
-% of the full Hamiltonian (as referenced later in chapter \ref{sec:further_discussions}).
-% However, as discussed earlier this project focuses more on optimization using the effective Hamiltonian in the dispersive regime where the DQD is effectively a two-level system. 
-% Derivation of the effective Hamiltonian is well written in \cite{reinhold2019} chapter 2.3, key formulas are reproduced here for later reference. 
-% The model effective Hamiltonian is given by, 
-% \begin{equation}\label{eq:effective_Hamiltonian}
-%     \boldsymbol{H}=\omega_c \boldsymbol{a}^{\dagger} \boldsymbol{a}+\frac{\omega_q}{2} \boldsymbol{\sigma}_z+\frac{\chi}{2} \boldsymbol{a}^{\dagger} \boldsymbol{a} \boldsymbol{\sigma}_z,    
-% \end{equation}
-
-% with $\chi=2 g^2 / \Delta$. This is the correct form only for an actual two-level system. 
-% For a multi-level system like a transmon this is only an approximation valid when the detuning to the ge transition is small compared with the detuning to other transitions.
-% This effective is used later in chapter \ref{sec:state_preparation}. 
-% The constants in this effective Hamiltonian include esonator frequency, qubit anharmonicity and cavity-qubit coupling strength. 
-% The numerical values of these constants used later in chapter \ref{sec:state_preparation} are typical values from experiments. 
-% However, exact numbers of these constants may depend on specific physical systems that the optimization scheme disucssed in this report is applied to. 
-
-The growing interest in integrating cavity dynamics with double quantum dot (DQD) configurations is a significant development in the field of quantum computing. This interest stems from recent successes in achieving strong coupling between semiconductor spin qubits and superconducting microwave resonators. These breakthroughs offer the exciting possibility of combining the robust coherence properties of solid-state spin qubits with the extensive connectivity, fast control, and high-fidelity quantum-non-demolition readouts that are characteristic of superconducting qubit systems.
-
-While our project focuses exclusively on state preparation within this physical system and does not address the readout phase, the potential applications and advancements serve as a compelling motivation for our investigation. The foundational physics and Hamiltonian formulations of the system have been comprehensively discussed in the existing literature, particularly by D_Anjou_2019 and Reinhold_2019, whose explanations we adapt here for clarity.
-
-Our study revolves around a DQD defined within a double-well potential \( V(z) \), with the wells separated by a distance \( 2d \). The primary energy orbitals of the right and left wells are represented by \( |\widetilde{R}\rangle \) and \( |\widetilde{L}\rangle \), respectively, each associated with its own energy levels \( \epsilon_R \) and \( \epsilon_L \). The energy difference between these orbitals is denoted as \( \epsilon=\epsilon_R-\epsilon_L \), and they are coupled through a tunneling term \( t_c \). An external uniform magnetic field along the z-axis creates a Zeeman energy split between the spin states \( |\widetilde{\uparrow}\rangle \) and \( |\widetilde{\downarrow}\rangle \), while a position-dependent magnetic field along the x-axis helps hybridize the spin and charge states, enabling electrical manipulation and readout of the spin states.
-
-\[
-\begin{equation}
-    H_d = H_m + H_Z, \\
-    H_m = \frac{\epsilon}{2} \widetilde{\tau}_z + t_c \widetilde{\tau}_x, \\
-    H_Z = \frac{B_z}{2} \widetilde{\sigma}_z + \frac{b_x}{2} \widetilde{\tau}_z \widetilde{\sigma}_x .
+\par
+Having discussed the original full Hamiltonian (as referenced later in chapter \ref{sec:further_discussions}), as discussed earlier this project focuses more on optimization using the effective Hamiltonian in the dispersive regime where the DQD is effectively a two-level system. 
+Derivation of the effective Hamiltonian is well written in \cite{reinhold2019} chapter 2.3, key formulas are reproduced here for later reference. 
+The model effective Hamiltonian is given by, 
+\begin{equation}\label{eq:effective_Hamiltonian}
+    \boldsymbol{H}=\omega_c \boldsymbol{a}^{\dagger} \boldsymbol{a}+\frac{\omega_q}{2} \boldsymbol{\sigma}_z+\frac{\chi}{2} \boldsymbol{a}^{\dagger} \boldsymbol{a} \boldsymbol{\sigma}_z,    
 \end{equation}
-\]
-
-The Hamiltonian captures the interactions within the DQD, where \( \widetilde{\tau}_i \) and \( \widetilde{\sigma}_i \) represent the Pauli matrices in the orbital and spin basis, respectively. The eigenstates of the molecular Hamiltonian \( H_m \) are characterized by their energy separation \( \Omega \), which represents the molecular energy gap and plays a crucial role in understanding the quantum dynamics within the DQD.
-
-In this system, the electric field of the resonator directly interacts with the electron's electric dipole moment, allowing the resonator photons to influence spin transitions. The Hamiltonian describing the combined resonator-DQD system is given by:
-
-\[
-\begin{equation}
-    H = H_d + H_r + V, \\
-    H_r = \omega_r a^{\dagger} a, \\
-    V = g_c \tilde{\tau}_z(a + a^{\dagger}) .
-\end{equation}
-\]
-
-This setup enables us to investigate the quantum behavior of spins within a DQD under the influence of a microwave resonator. We employ a model effective Hamiltonian for a two-level system, expressed as:
-
-\[
-\begin{equation}
-    \boldsymbol{H} = \omega_c \boldsymbol{a}^{\dagger} \boldsymbol{a} + \frac{\omega_q}{2} \boldsymbol{\sigma}_z + \frac{\chi}{2} \boldsymbol{a}^{\dagger} \boldsymbol{a} \boldsymbol{\sigma}_z,    
-\end{equation}
-\]
-
-with \( \chi = 2 g^2 / \Delta \). This simplified representation is particularly useful in the dispersive regime, where the DQD can be effectively treated as a two-level system. The constants in this Hamiltonian, such as resonator frequency and cavity-qubit coupling strength, are typically derived from experimental data, although they may vary depending on the specific physical implementations. By focusing on optimization using the effective Hamiltonian, our project aims to deepen our understanding and control of these quantum systems.
-
+This effective is used later in chapter \ref{sec:state_preparation}. 
+The constants in this effective Hamiltonian include resonator frequency $\omega_c$, qubit anharmonicity $\omega_q$ and cavity-qubit coupling strength $\chi$. 
+The numerical values of these constants used later in chapter \ref{sec:state_preparation} are typical values from experiments. 
+However, exact numbers of these constants may depend on specific physical systems that the optimization scheme discussed in this report is applied to. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Methodology: Quantum Optimal Control}\label{sec:methodology}
 %%%%%% 草稿 %%%%%%%%
